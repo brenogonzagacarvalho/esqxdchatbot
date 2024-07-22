@@ -24,7 +24,10 @@ const db = mysql.createConnection({
 });
 
 db.connect((err) => {
-  if (err) throw err;
+  if (err) {
+    console.error('Error connecting to the MySQL database:', err);
+    process.exit(1);
+  }
   console.log('Connected to the MySQL database.');
 });
 
@@ -91,24 +94,31 @@ async function trainChatbot() {
     console.log('Chatbot trained successfully.');
   } catch (err) {
     console.error('Error training chatbot:', err);
+    process.exit(1); // Para garantir que o bot não inicie sem treinamento adequado
   }
 }
 
 bot.start((ctx) => ctx.reply('Olá! Eu sou o chatbot da coordenação de engenharia de software. Como posso ajudar você?'));
 
 bot.on('text', (ctx) => {
-  let userMessage = ctx.message.text;
-  let botResponse = classifier.classify(userMessage);
+  try {
+    let userMessage = ctx.message.text;
+    let botResponse = classifier.classify(userMessage);
 
-  const insertQuery = `INSERT INTO chat_history (user_message, bot_response) VALUES (?, ?)`;
+    const insertQuery = `INSERT INTO chat_history (user_message, bot_response) VALUES (?, ?)`;
 
-  db.query(insertQuery, [userMessage, botResponse], (err, result) => {
-    if (err) throw err;
-    console.log(`A row has been inserted with id ${result.insertId}`);
-  });
+    db.query(insertQuery, [userMessage, botResponse], (err, result) => {
+      if (err) throw err;
+      console.log(`A row has been inserted with id ${result.insertId}`);
+    });
 
-  ctx.reply(botResponse);
+    ctx.reply(botResponse);
+  } catch (error) {
+    console.error('Error processing message:', error);
+    ctx.reply('Desculpe, ocorreu um erro ao processar sua mensagem.');
+  }
 });
+
 
 // Iniciando o bot
 bot.launch().then(() => {
