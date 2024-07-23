@@ -6,7 +6,6 @@ const mysql = require('mysql');
 const natural = require('natural');
 const express = require('express');
 
-
 // Configurando o servidor Express
 const app = express();
 const port = process.env.PORT || 3000;
@@ -79,16 +78,42 @@ function processText(text) {
 }
 
 // Treinamento do ChatBot
-const classifier = new natural.BayesClassifier();
+const classifier = new natural.LogisticRegressionClassifier();
+
+const classifyMessage = (message) => {
+  try {
+    if (message && message.length > 0) {
+      const classifications = classifier.getClassifications(message);
+      return classifications;
+    } else {
+      throw new Error("Invalid message input");
+    }
+  } catch (error) {
+    console.error("Error processing message:", error);
+    return null;
+  }
+};
 
 async function trainChatbot() {
   try {
-    const text = await extractTextFromPDF('respostas.pdf');
+    const text = await extractTextFromPDF('respostas1.pdf');
+    console.log('Texto extraído do PDF:', text);
     const trainingData = processText(text);
+    console.log('Dados de treinamento:', trainingData);
+
+    if (trainingData.length === 0) {
+      throw new Error('No training data found.');
+    }
 
     trainingData.forEach(item => {
       classifier.addDocument(item.input, item.output);
     });
+
+    trainingData.forEach(item => {
+      console.log('Adding document to classifier:', item);
+      classifier.addDocument(item.input, item.output);
+    });
+    
 
     classifier.train();
     console.log('Chatbot trained successfully.');
@@ -103,12 +128,23 @@ bot.start((ctx) => ctx.reply('Olá! Eu sou o chatbot da coordenação de engenha
 bot.on('text', (ctx) => {
   try {
     let userMessage = ctx.message.text;
+    console.log('Mensagem do usuário:', userMessage);
+
+    // Certifique-se de que o classificador está treinado antes de classificar
+    if (!classifier.docs || classifier.docs.length === 0) {
+      throw new Error("Classifier has not been trained.");
+    }
+
     let botResponse = classifier.classify(userMessage);
+    console.log('Resposta do bot:', botResponse);
 
     const insertQuery = `INSERT INTO chat_history (user_message, bot_response) VALUES (?, ?)`;
 
     db.query(insertQuery, [userMessage, botResponse], (err, result) => {
-      if (err) throw err;
+      if (err) {
+        console.error('Erro ao inserir no banco de dados:', err);
+        throw err;
+      }
       console.log(`A row has been inserted with id ${result.insertId}`);
     });
 
@@ -118,7 +154,6 @@ bot.on('text', (ctx) => {
     ctx.reply('Desculpe, ocorreu um erro ao processar sua mensagem.');
   }
 });
-
 
 // Iniciando o bot
 bot.launch().then(() => {
