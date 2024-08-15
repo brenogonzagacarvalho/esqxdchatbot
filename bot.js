@@ -18,32 +18,6 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-app.post('/ask', (req, res) => {
-  const userQuestion = preprocessText(req.body.question);
-  const classifications = classifier.getClassifications(userQuestion);
-  const highestClassification = classifications[0];
-
-  let botAnswer;
-  if (highestClassification.value < 0.5) { // Ajuste o valor conforme necessário
-    botAnswer = 'Desculpe, não tenho certeza sobre a resposta. Pode reformular a pergunta ou fornecer mais informações?';
-  } else {
-    botAnswer = classifier.classify(userQuestion);
-  }
-
-  const insertQuery = 'INSERT INTO questions (question, answer) VALUES (?, ?)';
-  db.query(insertQuery, [userQuestion, botAnswer], (error, results) => {
-    if (error) throw error;
-    console.log(`A row has been inserted with id ${results.insertId}`);
-  });
-
-  res.json({ answer: botAnswer });
-});
-
-app.post('/retrain', (req, res) => {
-  retrainChatbot();
-  res.send('Chatbot retrained.');
-});
-
 // Conectando ao banco de dados MySQL
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -79,6 +53,11 @@ const TOKEN = process.env.TELEGRAM_TOKEN;
 
 // Configurando o bot do Telegram
 const bot = new Telegraf(TOKEN);
+
+// Definindo o webhook do Telegram
+app.post(`/bot${TOKEN}`, (req, res) => {
+  bot.handleUpdate(req.body, res);
+});
 
 // Função para extrair texto do PDF
 async function extractTextFromPDF(pdfPath) {
@@ -170,7 +149,6 @@ async function trainChatbot() {
     trainingData.forEach(item => {
       if (item.input && item.output) {
         console.log('Adding document to classifier:', item);
-        classifier.addDocument(item.input, item.output);
       }
     });
 
@@ -183,7 +161,7 @@ async function trainChatbot() {
 }
 
 bot.start((ctx) => ctx.reply('Olá! Eu sou o chatbot da coordenação de engenharia de software. Como posso ajudar você?'));
-
+bot.help((ctx) => ctx.reply('Como posso ajudar?'));
 bot.on('text', (ctx) => {
   try {
     let userMessage = ctx.message.text;
