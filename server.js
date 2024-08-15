@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const db = require('./database');
 const bot = require('./telegramBot');
-const { trainChatbot } = require('./chatbot');
+const { trainChatbot } = require('./trainChatbot');
 
 app.use(bodyParser.json());
 

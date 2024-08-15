@@ -3,7 +3,7 @@ const express = require('express');
 const app = require('./server');
 const db = require('./database');
 const bot = require('./telegramBot');
-const { trainChatbot } = require('./chatbot');
+const { trainChatbot } = require('./trainChatbot');
 
 // Configurando o servidor Express
 const port = process.env.PORT || 3000;
