@@ -1,12 +1,13 @@
 require('dotenv').config();
 const express = require('express');
-const app = require('./server');
-const db = require('./database');
+const app = express(); 
 const bot = require('./telegramBot');
 const { trainChatbot } = require('./trainChatbot');
 
 // Configurando o servidor Express
 const port = process.env.PORT || 3000;
+
+app.use(express.json());
 
 app.post(`/bot${process.env.TELEGRAM_TOKEN}`, (req, res) => {
   bot.handleUpdate(req.body, res);
@@ -20,4 +21,9 @@ trainChatbot().then(() => {
   });
 }).catch(err => {
   console.error('Error training chatbot:', err);
+});
+
+// Iniciar o servidor Express
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}`);
 });

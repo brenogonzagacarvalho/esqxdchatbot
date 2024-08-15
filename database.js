@@ -1,3 +1,4 @@
+require('dotenv').config();
 const mysql = require('mysql');
 
 const db = mysql.createConnection({
@@ -24,8 +25,11 @@ CREATE TABLE IF NOT EXISTS chat_history (
 )`;
 
 db.query(createTableQuery, (err, result) => {
-  if (err) throw err;
-  console.log('Table created or already exists.');
+  if (err) {
+    console.error('Error creating table:', err);
+    process.exit(1);
+  }
+  console.log('Table chat_history created or already exists.');
 });
 
 module.exports = db;
