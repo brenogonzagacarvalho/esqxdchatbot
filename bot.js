@@ -3,6 +3,7 @@ const express = require('express');
 const app = express(); 
 const bot = require('./telegramBot');
 const { trainChatbot } = require('./trainChatbot');
+const db = require('./database'); 
 
 // Configurando o servidor Express
 const port = process.env.PORT || 3000;
@@ -22,8 +23,9 @@ trainChatbot().then(() => {
 }).catch(err => {
   console.error('Error training chatbot:', err);
 });
-
 // Iniciar o servidor Express
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
+
+module.exports = app;

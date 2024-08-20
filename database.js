@@ -1,35 +1,37 @@
+const { Client } = require('pg');
 require('dotenv').config();
-const mysql = require('mysql');
 
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+const client = new Client({
+  connectionString: process.env.POSTGRES_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
-db.connect((err) => {
+client.connect(err => {
   if (err) {
-    console.error('Error connecting to the MySQL database:', err);
+    console.error('Error connecting to the PostgreSQL database:', err);
     process.exit(1);
+  } else {
+    console.log('Connected to the PostgreSQL database.');
   }
-  console.log('Connected to the MySQL database.');
 });
 
 const createTableQuery = `
 CREATE TABLE IF NOT EXISTS chat_history (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     user_message TEXT NOT NULL,
     bot_response TEXT NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )`;
 
-db.query(createTableQuery, (err, result) => {
+client.query(createTableQuery, (err, result) => {
   if (err) {
     console.error('Error creating table:', err);
     process.exit(1);
+  } else {
+    console.log('Table chat_history created or already exists.');
   }
-  console.log('Table chat_history created or already exists.');
 });
 
-module.exports = db;
+module.exports = client;
