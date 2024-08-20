@@ -2,6 +2,7 @@ const natural = require('natural');
 const db = require('./database');
 const { extractTextFromPDF, preprocessText } = require('./pdfProcessor');
 
+// Definindo o classifier
 const classifier = new natural.LogisticRegressionClassifier();
 
 function processText(text) {
@@ -23,7 +24,8 @@ function processText(text) {
     { input: 'Quantas horas de Atividades Complementares são necessárias para o curso?', output: 'O aluno deverá cumprir 100 horas de Atividades Complementares, conforme o estabelecido no currículo do curso (Art. 4º).' },
     { input: 'Quais são os tipos de Atividades Complementares reconhecidas?', output: 'As Atividades Complementares reconhecidas incluem participação em projetos de pesquisa, extensão, monitorias, eventos científicos, culturais, esportivos, entre outros, desde que relacionados ao curso (Art. 2º).' },
     { input: 'Como é realizada a comprovação das Atividades Complementares?', output: 'A comprovação das Atividades Complementares é feita mediante a apresentação de certificados ou documentos que comprovem a participação nas atividades, os quais serão avaliados pela coordenação do curso (Art. 5º).' },
-    { input: 'É possível realizar Atividades Complementares fora da instituição?', output: 'Sim, é possível realizar Atividades Complementares fora da instituição, desde que as atividades sejam pertinentes ao curso e aprovadas pela coordenação (Art. 3º).' }
+    { input: 'É possível realizar Atividades Complementares fora da instituição?', output: 'Sim, é possível realizar Atividades Complementares fora da instituição, desde que as atividades sejam pertinentes ao curso e aprovadas pela coordenação (Art. 3º).' },
+    { input: 'Calendário acadêmico', output: 'Para informações sobre o calendário acadêmico, acesse: https://www.ufc.br/calendario-universitario/2024-ajuste-pos-greve' }
   ];
 
   let currentQuestion = null;
@@ -32,7 +34,7 @@ function processText(text) {
   });
 
   classifier.train();
-
+  
   lines.forEach(line => {
     const trimmedLine = line.trim();
     if (trimmedLine.startsWith('-Pergunta:')) {
@@ -91,4 +93,4 @@ function retrainChatbot() {
   });
 }
 
-module.exports = { preprocessText, classifier, trainChatbot, retrainChatbot };
+module.exports = { processText, classifier, trainChatbot, retrainChatbot };

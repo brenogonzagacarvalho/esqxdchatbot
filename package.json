@@ -4,7 +4,7 @@
   "description": "Chatbot para a coordenação de engenharia de software",
   "main": "bot.js",
   "scripts": {
-    "start": "nodemon bot.js"
+    "start": "nodemon telegramBot.js"
   },
   "dependencies": {
     "dotenv": "^10.0.0",
