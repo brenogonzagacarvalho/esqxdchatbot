@@ -11,8 +11,5 @@
       "src": "/(.*)",
       "dest": "/botServer.js"
     }
-  ],
-  "files": [
-    "respostas1.pdf"
   ]
 }
