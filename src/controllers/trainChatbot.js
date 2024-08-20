@@ -1,5 +1,5 @@
 const natural = require('natural');
-const db = require('./database');
+const db = require('./services/database');
 const { extractTextFromPDF, preprocessText } = require('./pdfProcessor');
 
 const classifier = new natural.LogisticRegressionClassifier();
@@ -49,7 +49,7 @@ function processText(text) {
 
 async function trainChatbot() {
   try {
-    const text = await extractTextFromPDF('respostas1.pdf');  
+    const text = await extractTextFromPDF('data/respostas1.pdf'); 
     const trainingData = processText(text);    
 
     if (trainingData.length === 0) {
@@ -58,7 +58,7 @@ async function trainChatbot() {
 
     trainingData.forEach(item => {
       if (item.input && item.output) {
-        classifier.addDocument(item.input, item.output);
+        classifier.addDocument(item.input, item.output);    
       }
     });
 
