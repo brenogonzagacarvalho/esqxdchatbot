@@ -24,7 +24,7 @@ function processText(text) {
     { input: 'Quais são os tipos de Atividades Complementares reconhecidas?', output: 'As Atividades Complementares reconhecidas incluem participação em projetos de pesquisa, extensão, monitorias, eventos científicos, culturais, esportivos, entre outros, desde que relacionados ao curso (Art. 2º).' },
     { input: 'Como é realizada a comprovação das Atividades Complementares?', output: 'A comprovação das Atividades Complementares é feita mediante a apresentação de certificados ou documentos que comprovem a participação nas atividades, os quais serão avaliados pela coordenação do curso (Art. 5º).' },
     { input: 'É possível realizar Atividades Complementares fora da instituição?', output: 'Sim, é possível realizar Atividades Complementares fora da instituição, desde que as atividades sejam pertinentes ao curso e aprovadas pela coordenação (Art. 3º).' }
-];
+  ];
 
   let currentQuestion = null;
   trainingData.forEach(item => {
@@ -41,7 +41,8 @@ function processText(text) {
       const answer = trimmedLine.replace('-Resposta:', '').trim();
       trainingData.push({ input: currentQuestion, output: answer });
       currentQuestion = null;
-    }  });
+    }
+  });
 
   return trainingData;
 }
@@ -63,7 +64,8 @@ async function trainChatbot() {
 
     classifier.train();
     console.log('Chatbot trained successfully.');
-  } catch (err) {    console.error('Error training chatbot:', err);
+  } catch (err) {
+    console.error('Error training chatbot:', err);
     process.exit(1);
   }
 }

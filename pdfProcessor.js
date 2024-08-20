@@ -1,8 +1,15 @@
 const fs = require('fs');
+const path = require('path');
 const pdf = require('pdf-parse');
 
 async function extractTextFromPDF(pdfPath) {
-  let dataBuffer = fs.readFileSync(pdfPath);
+  const filePath = path.join(__dirname, pdfPath);
+
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`File not found: ${filePath}`);
+  }
+
+  let dataBuffer = fs.readFileSync(filePath);
   let data = await pdf(dataBuffer);
   return preprocessText(data.text);
 }
