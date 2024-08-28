@@ -17,6 +17,12 @@ client.connect(err => {
   }
 });
 
+// Adicionando manipulador de eventos para erros de conexão
+client.on('error', (err) => {
+  console.error('Unexpected error on idle client', err);
+  process.exit(1);
+});
+
 const createTableQuery = `
 CREATE TABLE IF NOT EXISTS chat_history (
     id SERIAL PRIMARY KEY,

@@ -10,7 +10,7 @@ async function extractTextFromPDF(pdfPath) {
   }
 
   let dataBuffer = fs.readFileSync(filePath);
-  let data = await pdf(dataBuffer);
+  let data = await pdf(dataBuffer); 
   return preprocessText(data.text);
 }
 
