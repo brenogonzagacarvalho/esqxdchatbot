@@ -1,9 +1,8 @@
 const natural = require('natural');
 const db = require('./database');
-const { extractTextFromPDF, preprocessText } = require('./pdfProcessor');
-
-// Definindo o classifier
+const path = require('path');
 const classifier = new natural.LogisticRegressionClassifier();
+const {extractTextFromPDF, preprocessText} = require('./pdfProcessor');
 
 function processText(text) {
   const lines = text.split('\n');
@@ -47,7 +46,6 @@ function processText(text) {
     { "input": "O que é o Programa de Apoio ao Estudante com Deficiência?", "output": "É um programa que oferece apoio aos estudantes com deficiência que desejam estudar na UFC." }
   ];
 
-  // Remover duplicatas
   const uniqueTrainingData = Array.from(new Set(trainingData.map(JSON.stringify))).map(JSON.parse);
 
   let currentQuestion = null;
@@ -73,18 +71,24 @@ function processText(text) {
 
 async function trainChatbot() {
   try {
-    const text = await extractTextFromPDF('respostas.pdf');  
+    const filePath = path.join(__dirname, 'public', 'respostas.pdf'); // Atualize o caminho conforme necessário
+    const text = await extractTextFromPDF(filePath); 
     const trainingData = processText(text);    
 
     if (trainingData.length === 0) {
       throw new Error('No training data found.');
     }
 
-    trainingData.forEach(item => {
+    // Salvar dados de treinamento no banco de dados
+    for (const item of trainingData) {
       if (item.input && item.output) {
+        await db.query(
+          'INSERT INTO chat_history (user_message, bot_response) VALUES ($1, $2)',
+          [item.input, item.output]
+        );
         classifier.addDocument(item.input, item.output);
       }
-    });
+    }
 
     classifier.train();
     console.log('Chatbot trained successfully.');
@@ -101,7 +105,7 @@ function retrainChatbot() {
       return;
     }
 
-    const newTrainingData = results.map(row => ({
+    const newTrainingData = results.rows.map(row => ({
       input: preprocessText(row.user_message),
       output: preprocessText(row.bot_response)
     }));

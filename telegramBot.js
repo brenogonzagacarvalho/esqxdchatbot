@@ -18,6 +18,7 @@ async function startBot() {
     bot.start((ctx) => {
       userStates[ctx.from.id] = { step: 0 };
       ctx.reply('Olá! Eu sou o chatbot da coordenação de engenharia de software. Como posso ajudar você?');
+      ctx.reply('Bem-vindo ao nosso chat! Estou aqui para ajudar com suas dúvidas sobre o curso de engenharia de software.');
     });
 
     bot.on('text', (ctx) => {
@@ -32,7 +33,7 @@ async function startBot() {
 
         // Função para verificar se a confiança é maior que 80%
         function isConfidentEnough(classification) {
-          return classification && classification.value >= 0.8;
+          return classification && classification.value >= 0.6;
         }
 
         if (isConfidentEnough(highestClassification)) {
@@ -55,10 +56,10 @@ async function startBot() {
 
         if (userStates[userId].step === 0) {
           userStates[userId].step = 1;
-          setTimeout(() => ctx.reply('Você precisa de mais alguma coisa?'), 1000);
+          setTimeout(() => ctx.reply('Você precisa de mais alguma coisa?'), 5000);
         } else if (userStates[userId].step === 1) {
           userStates[userId].step = 2;
-          setTimeout(() => ctx.reply('Posso ajudar com mais alguma coisa?'), 1000);
+          setTimeout(() => ctx.reply('Posso ajudar com mais alguma coisa?'), 5000);
         } else if (userStates[userId].step === 2) {
           ctx.reply('Obrigado por entrar em contato. Tenha um ótimo dia!');
           setTimeout(() => ctx.reply('Se precisar de mais assistência, entre em contato diretamente com a coordenação do curso.'), 1000);
