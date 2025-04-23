@@ -1,31 +1,52 @@
 const natural = require('natural');
-const db = require('./database');
 const path = require('path');
-const classifier = new natural.LogisticRegressionClassifier();
-const { loadQuestionsAndAnswersFromTxt } = require('./pdfProcessor');
+const fs = require('fs');
+const classifier = new natural.BayesClassifier();
 
-async function trainChatbot() {
-  try {
-    const filePath = path.join(__dirname, 'public', 'perguntas_respostas.txt'); // Caminho do arquivo .txt
-    const trainingData = loadQuestionsAndAnswersFromTxt(filePath);
 
-    if (trainingData.length === 0) {
-      throw new Error('Nenhum dado de treinamento encontrado.');
-    }
-
-    // Treinar o chatbot com os dados do arquivo .txt
-    for (const item of trainingData) {
-      if (item.input && item.output) {
-        classifier.addDocument(item.input, item.output);
+function loadClassifier() {
+  if (fs.existsSync('classifier.json')) {
+    natural.BayesClassifier.load('classifier.json', null, (err, loadedClassifier) => {
+      if (err) {
+        console.error('Erro ao carregar o classificador:', err);
+      } else {
+        console.log('Classificador Bayer carregado com sucesso.');
+        Object.assign(classifier, loadedClassifier);
       }
-    }
-
-    classifier.train();
-    console.log('Chatbot treinado com sucesso.');
-  } catch (err) {
-    console.error('Erro ao treinar o chatbot:', err);
-    process.exit(1);
+    });
+  } else {
+    console.log('Nenhum classificador salvo encontrado. Um novo será criado.');
   }
 }
 
-module.exports = { classifier, trainChatbot };
+loadClassifier();
+
+async function trainChatbotFromTxt(trainingData) {
+  const lines = trainingData.split('\n');
+  let currentQuestion = null;
+
+  for (const line of lines) {
+    if (line.startsWith('- Pergunta:')) {
+      currentQuestion = line.replace('- Pergunta:', '').trim();
+    } else if (line.startsWith('- Resposta:') && currentQuestion) {
+      const answer = line.replace('- Resposta:', '').trim();
+      classifier.addDocument(currentQuestion, answer);
+      currentQuestion = null;
+    }
+  }
+
+  classifier.train();
+  console.log('Classificador treinado com sucesso com o txt.');
+}
+
+async function saveClassifier() {
+  classifier.save('classifier.json', (err) => {
+    if (err) {
+      console.error('Erro ao salvar o classificador:', err);
+    } else {
+      console.log('Classificador salvo com sucesso.');
+    }
+  });
+}
+
+module.exports = { classifier, trainChatbotFromTxt, saveClassifier };

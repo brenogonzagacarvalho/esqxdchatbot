@@ -60,12 +60,8 @@ app.post('/add-answer', async (req, res) => {
     console.log('Adicionando ao classificador...');
     classifier.addDocument(question, answer);
     console.log('Treinando o classificador...');
-    classifier.train();
-
-    // Remover a pergunta da tabela
-    console.log('Removendo pergunta da tabela unanswered_questions...');
-    await db.query('DELETE FROM unanswered_questions WHERE id = ?', [questionId]);
-    console.log('Pergunta removida com sucesso.');
+    classifier.train();   
+   
 
     res.send('Resposta adicionada e bot treinado com sucesso.');
   } catch (err) {
