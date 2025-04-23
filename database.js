@@ -1,43 +1,48 @@
-const { Client } = require('pg');
+const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-const client = new Client({
-  connectionString: process.env.POSTGRES_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
-client.connect(err => {
-  if (err) {
-    console.error('Error connecting to the PostgreSQL database:', err);
+async function initializeDatabase() {
+  try {
+    const connection = await pool.getConnection();
+    console.log('Conectado ao banco de dados MySQL.');
+
+    // Criação da tabela chat_history
+    const createChatHistoryTable = `
+      CREATE TABLE IF NOT EXISTS chat_history (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_message TEXT NOT NULL,
+        bot_response TEXT NOT NULL,
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+    await connection.query(createChatHistoryTable);
+
+    // Criação da tabela user_data
+    const createUserDataTable = `
+      CREATE TABLE IF NOT EXISTS user_data (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id BIGINT NOT NULL,
+        matricula TEXT NOT NULL,
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+    await connection.query(createUserDataTable);
+
+    connection.release();
+  } catch (err) {
+    console.error('Erro ao inicializar o banco de dados:', err);
     process.exit(1);
-  } else {
-    console.log('Connected to the PostgreSQL database.');
   }
-});
+}
 
-// Adicionando manipulador de eventos para erros de conexão
-client.on('error', (err) => {
-  console.error('Unexpected error on idle client', err);
-  process.exit(1);
-});
+initializeDatabase();
 
-const createTableQuery = `
-CREATE TABLE IF NOT EXISTS chat_history (
-    id SERIAL PRIMARY KEY,
-    user_message TEXT NOT NULL,
-    bot_response TEXT NOT NULL,
-    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)`;
-
-client.query(createTableQuery, (err, result) => {
-  if (err) {
-    console.error('Error creating table:', err);
-    process.exit(1);
-  } else {
-    console.log('Table chat_history created or already exists.');
-  }
-});
-
-module.exports = client;
+module.exports = pool;

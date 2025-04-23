@@ -8,66 +8,77 @@ const bot = new Telegraf(TOKEN);
 
 const userStates = {};
 
-// Função para iniciar o bot após o treinamento
 async function startBot() {
   try {
     console.log('Treinando o chatbot...');
     await trainChatbot();
     console.log('Chatbot treinado com sucesso.');
 
-    bot.start((ctx) => {
-      userStates[ctx.from.id] = { step: 0 };
-      ctx.reply('Olá! Eu sou o chatbot da coordenação de engenharia de software. Como posso ajudar você?');
-      ctx.reply('Bem-vindo ao nosso chat! Estou aqui para ajudar com suas dúvidas sobre o curso de engenharia de software.');
+    bot.start(async (ctx) => {
+      const userId = ctx.from.id;
+      userStates[userId] = { step: 'collecting_matricula' };
+      ctx.reply('Olá! Antes de começarmos, por favor, informe sua matrícula:');
     });
 
-    bot.on('text', (ctx) => {
-      try {
-        const userId = ctx.from.id;
-        let userMessage = ctx.message.text;
-        console.log('Mensagem do usuário:', userMessage);
+    bot.on('text', async (ctx) => {
+      const userId = ctx.from.id;
+      const userMessage = ctx.message.text.trim();
 
-        const classifications = classifier.getClassifications(userMessage);
-        const highestClassification = classifications[0];
-        let botResponse;
+      if (!userStates[userId]) {
+        userStates[userId] = { step: 'collecting_matricula' };
+      }
 
-        // Função para verificar se a confiança é maior que 80%
-        function isConfidentEnough(classification) {
-          return classification && classification.value >= 0.6;
-        }
+      const userState = userStates[userId];
 
-        if (isConfidentEnough(highestClassification)) {
-          botResponse = highestClassification.label;
+      if (userState.step === 'collecting_matricula') {
+        if (/^\d+$/.test(userMessage)) { // Verifica se a matrícula é numérica
+          userState.matricula = userMessage;
+          userState.step = 'main_menu';
+
+          // Armazena a matrícula no banco de dados
+          await db.query(
+            'INSERT INTO user_data (user_id, matricula) VALUES (?, ?)',
+            [userId, userMessage]
+          );
+
+          ctx.reply('Matrícula registrada com sucesso!');
+          ctx.reply('Escolha uma das opções abaixo para começar:');
+          ctx.reply('1. Informações sobre estágio\n2. Informações sobre matrícula\n3. Outras dúvidas');
         } else {
-          botResponse = "Desculpe, não entendi sua mensagem.";
+          ctx.reply('Por favor, informe uma matrícula válida (apenas números).');
         }
-
-        // Verificar se a resposta do bot é uma string legível
-        if (typeof botResponse !== 'string' || botResponse.trim() === '') {
-          botResponse = "Desculpe, não entendi sua mensagem.";
+      } else if (userState.step === 'main_menu') {
+        if (userMessage === '1') {
+          ctx.reply('Você escolheu informações sobre estágio. Pergunte algo ou digite "voltar" para o menu inicial.');
+          userState.step = 'estagio';
+        } else if (userMessage === '2') {
+          ctx.reply('Você escolheu informações sobre matrícula. Pergunte algo ou digite "voltar" para o menu inicial.');
+          userState.step = 'matricula';
+        } else if (userMessage === '3') {
+          ctx.reply('Você escolheu outras dúvidas. Pergunte algo ou digite "voltar" para o menu inicial.');
+          userState.step = 'outras_duvidas';
+        } else {
+          ctx.reply('Opção inválida. Por favor, escolha uma das opções: 1, 2 ou 3.');
         }
+      } else {
+        if (userMessage.toLowerCase() === 'voltar') {
+          userState.step = 'main_menu';
+          ctx.reply('Voltando ao menu inicial...');
+          ctx.reply('Escolha uma das opções abaixo para começar:');
+          ctx.reply('1. Informações sobre estágio\n2. Informações sobre matrícula\n3. Outras dúvidas');
+        } else {
+          const classifications = classifier.getClassifications(userMessage);
+          const highestClassification = classifications[0];
+          let botResponse;
 
-        ctx.reply(botResponse);
-        console.log('Resposta do bot:', botResponse);
+          if (highestClassification && highestClassification.value >= 0.6) {
+            botResponse = highestClassification.label;
+          } else {
+            botResponse = "Desculpe, não entendi sua mensagem.";
+          }
 
-        if (!userStates[userId]) {
-          userStates[userId] = { step: 0 };
+          ctx.reply(botResponse);
         }
-
-        if (userStates[userId].step === 0) {
-          userStates[userId].step = 1;
-          setTimeout(() => ctx.reply('Você precisa de mais alguma coisa?'), 5000);
-        } else if (userStates[userId].step === 1) {
-          userStates[userId].step = 2;
-          setTimeout(() => ctx.reply('Posso ajudar com mais alguma coisa?'), 5000);
-        } else if (userStates[userId].step === 2) {
-          ctx.reply('Obrigado por entrar em contato. Tenha um ótimo dia!');
-          setTimeout(() => ctx.reply('Se precisar de mais assistência, entre em contato diretamente com a coordenação do curso.'), 1000);
-          delete userStates[userId];
-        }
-      } catch (error) {
-        console.error('Erro ao processar a mensagem:', error);
-        ctx.reply('Ocorreu um erro ao processar sua mensagem.');
       }
     });
 
@@ -78,5 +89,4 @@ async function startBot() {
   }
 }
 
-// Iniciar o bot após o treinamento
 startBot();
