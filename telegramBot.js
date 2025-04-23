@@ -75,6 +75,15 @@ async function startBot() {
             botResponse = highestClassification.label;
           } else {
             botResponse = "Desculpe, não entendi sua mensagem.";
+
+            // Salvar a pergunta no banco de dados para treinamento futuro
+            await db.query(
+              'INSERT INTO unanswered_questions (user_id, question) VALUES (?, ?)',
+              [userId, userMessage]
+            );
+
+            ctx.reply(botResponse);
+            ctx.reply('Sua pergunta foi registrada e será usada para melhorar o bot no futuro.');
           }
 
           ctx.reply(botResponse);
