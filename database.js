@@ -36,6 +36,17 @@ async function initializeDatabase() {
     `;
     await connection.query(createUserDataTable);
 
+    // Criação da tabela unanswered_questions
+    const createUnansweredQuestionsTable = `
+      CREATE TABLE IF NOT EXISTS unanswered_questions (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id BIGINT NOT NULL,
+        question TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+    await connection.query(createUnansweredQuestionsTable);
+
     connection.release();
   } catch (err) {
     console.error('Erro ao inicializar o banco de dados:', err);

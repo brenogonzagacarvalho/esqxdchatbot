@@ -1,0 +1,397 @@
+[
+  {
+    "intent": "resposta_0",
+    "pergunta": "O que é o Estágio Curricular Supervisionado?",
+    "resposta": "O Estágio Curricular Supervisionado previsto no Projeto Pedagógico do Curso é"
+  },
+  {
+    "intent": "resposta_1",
+    "pergunta": "Quais são os critérios para a matrícula em estágio?",
+    "resposta": "Os critérios para efetivação da matrícula de discente em atividade de estágio"
+  },
+  {
+    "intent": "resposta_2",
+    "pergunta": "O que é o Termo de Compromisso de Estágio?",
+    "resposta": "O Termo de Compromisso de Estágio é um documento que formaliza a relação"
+  },
+  {
+    "intent": "resposta_3",
+    "pergunta": "O que é o Núcleo de Práticas da UFC em Quixadá?",
+    "resposta": "O Núcleo de Práticas da UFC em Quixadá é uma unidade que oferece"
+  },
+  {
+    "intent": "resposta_4",
+    "pergunta": "Quais são as modalidades de estágio curricular supervisionado?",
+    "resposta": "O Estágio Curricular Supervisionado é executado nas seguintes modalidades:"
+  },
+  {
+    "intent": "resposta_5",
+    "pergunta": "Como são realizados os estágios externos?",
+    "resposta": "Os estágios externos em empresa conveniada serão realizados mediante a"
+  },
+  {
+    "intent": "resposta_6",
+    "pergunta": "Como são realizados os estágios internos?",
+    "resposta": "O estágio interno consiste nas atividades “Estágio Supervisionado I” e “Estágio"
+  },
+  {
+    "intent": "resposta_7",
+    "pergunta": "Qual a carga horária das atividades de estágio?",
+    "resposta": "As atividades Estágio Supervisionado I e Estágio Supervisionado II terão, cada"
+  },
+  {
+    "intent": "resposta_8",
+    "pergunta": "Como é o aproveitamento de atuação profissional do discente na área do curso?",
+    "resposta": "O aproveitamento de atuação profissional do discente na área do curso pode"
+  },
+  {
+    "intent": "resposta_9",
+    "pergunta": "Quais são as responsabilidades do discente em estágio supervisionado?",
+    "resposta": "Cabe ao discente em estágio supervisionado: (I) Apresentar Plano de Trabalho"
+  },
+  {
+    "intent": "resposta_10",
+    "pergunta": "Quais são as responsabilidades do supervisor de estágio?",
+    "resposta": "Cabe ao supervisor: Apresentar a Avaliação do Rendimento do discente ao"
+  },
+  {
+    "intent": "resposta_11",
+    "pergunta": "Quais são as responsabilidades do professor orientador de estágio?",
+    "resposta": "Cabe ao professor orientador: (I) Avaliar o Plano de Trabalho apresentado pelo"
+  },
+  {
+    "intent": "resposta_12",
+    "pergunta": "Como é realizada a avaliação do discente nas atividades de Estágio Curricular",
+    "resposta": "A avaliação do discente nas atividades de Estágio Curricular Supervisionado"
+  },
+  {
+    "intent": "resposta_13",
+    "pergunta": "O que acontece em caso de reprovação no estágio curricular supervisionado?",
+    "resposta": "Em caso de reprovação, o discente deverá solicitar matrícula no componente no"
+  },
+  {
+    "intent": "resposta_14",
+    "pergunta": "Como posso me inscrever como aluno especial na UFC?",
+    "resposta": "O estudante deve se dirigir à coordenação de cada curso e, após consentimento, comparecer à Divisão de Seleção e Matrícula da Prograd."
+  },
+  {
+    "intent": "resposta_15",
+    "pergunta": "Qual é a documentação exigida para alunos especiais?",
+    "resposta": "Cópias legíveis do diploma de graduação, documento de identidade e CPF são necessárias."
+  },
+  {
+    "intent": "resposta_16",
+    "pergunta": "A UFC oferece assistência estudantil?",
+    "resposta": "Sim, a assistência estudantil inclui programas como Residência Universitária, Restaurante Universitário e Apoio Psicopedagógico."
+  },
+  {
+    "intent": "resposta_17",
+    "pergunta": "O que é a Educação à Distância (EaD)?",
+    "resposta": "É um processo de ensino-aprendizagem mediado por tecnologia, onde professores e alunos não estão no mesmo espaço físico."
+  },
+  {
+    "intent": "resposta_18",
+    "pergunta": "Como é calculado o Índice de Rendimento Acadêmico (IRA) Geral?",
+    "resposta": "O IRA Geral é calculado com base na média das notas dos alunos do mesmo curso, normalizada por desempenho."
+  },
+  {
+    "intent": "resposta_19",
+    "pergunta": "O que acontece se um aluno tiver a matrícula bloqueada?",
+    "resposta": "O bloqueio ocorre após duas reprovações por frequência na mesma disciplina ou quatro reprovações em disciplinas do curso."
+  },
+  {
+    "intent": "resposta_20",
+    "pergunta": "Como posso solicitar o trancamento parcial de matrícula?",
+    "resposta": "O aluno deve encaminhar solicitação à Coordenação de Curso dentro do prazo estabelecido pelo Calendário Universitário."
+  },
+  {
+    "intent": "resposta_21",
+    "pergunta": "Quais são os critérios para solicitar trancamento total de matrícula?",
+    "resposta": "Doença, mudança de domicílio, emprego ou obrigação militar são algumas das situações que permitem o trancamento."
+  },
+  {
+    "intent": "resposta_22",
+    "pergunta": "O que é mobilidade acadêmica?",
+    "resposta": "É o processo que permite ao aluno cursar disciplinas em outra Instituição Federal de Ensino Superior (IFES)."
+  },
+  {
+    "intent": "resposta_23",
+    "pergunta": "Como posso participar do programa de mobilidade acadêmica?",
+    "resposta": "O aluno deve procurar o setor responsável na sua IFES de origem e seguir os procedimentos estabelecidos."
+  },
+  {
+    "intent": "resposta_24",
+    "pergunta": "É possível mudar de curso na UFC?",
+    "resposta": "Sim, é possível, mas o aluno deve verificar as normas e critérios no edital de mudança de curso."
+  },
+  {
+    "intent": "resposta_25",
+    "pergunta": "Como funciona o Sistema de Seleção Unificada (SiSU) na UFC?",
+    "resposta": "O SiSU utiliza a nota do Enem para selecionar alunos para os cursos da universidade, conforme edital específico."
+  },
+  {
+    "intent": "resposta_26",
+    "pergunta": "Quais são as condições para a transferência de outras IES para a UFC?",
+    "resposta": "A transferência é regida por edital e depende da nota do Enem, além de outras condições."
+  },
+  {
+    "intent": "resposta_27",
+    "pergunta": "O que é o Auxílio Moradia?",
+    "resposta": "É um benefício concedido a alunos em situação de vulnerabilidade socioeconômica, que pode ser acumulado com outras bolsas."
+  },
+  {
+    "intent": "resposta_28",
+    "pergunta": "Como é calculado o IRA Individual?",
+    "resposta": "O IRA Individual é calculado com base nas notas e carga horária das disciplinas cursadas pelo aluno."
+  },
+  {
+    "intent": "resposta_29",
+    "pergunta": "Quais atividades complementares são consideradas para o IRA?",
+    "resposta": "Atividades complementares de ensino não são incluídas no cálculo do IRA Individual."
+  },
+  {
+    "intent": "resposta_30",
+    "pergunta": "O que é o Auxílio Emergencial e quando pode ser solicitado?",
+    "resposta": "É concedido em situações de emergência, como problemas de saúde ou limitações financeiras temporárias."
+  },
+  {
+    "intent": "resposta_31",
+    "pergunta": "Como posso consultar meu IRA?",
+    "resposta": "O IRA pode ser consultado no histórico acadêmico do aluno."
+  },
+  {
+    "intent": "resposta_32",
+    "pergunta": "Qual é o limite de disciplinas que um aluno especial pode cursar na UFC?",
+    "resposta": "O aluno especial não pode exceder cinco disciplinas e deve completar isso em até quatro semestres letivos."
+  },
+  {
+    "intent": "resposta_33",
+    "pergunta": "Quais são os critérios para solicitar mudança de curso na UFC?",
+    "resposta": "Os critérios são estabelecidos em edital específico publicado pela Prograd, com base em IRA, vagas disponíveis e período cursado."
+  },
+  {
+    "intent": "resposta_34",
+    "pergunta": "Como funciona o Programa de Residência Universitária?",
+    "resposta": "O programa oferece moradia estudantil aos alunos em situação de vulnerabilidade socioeconômica."
+  },
+  {
+    "intent": "resposta_35",
+    "pergunta": "Quais são os requisitos para receber o Auxílio Creche?",
+    "resposta": "O aluno deve ter filhos entre 6 meses e 4 anos incompletos e comprovar a guarda da criança."
+  },
+  {
+    "intent": "resposta_36",
+    "pergunta": "O Auxílio Emergencial pode ser solicitado quantas vezes?",
+    "resposta": "O aluno pode receber o auxílio emergencial até 4 vezes por ano letivo."
+  },
+  {
+    "intent": "resposta_37",
+    "pergunta": "Qual é o limite de bolsas que um aluno pode acumular?",
+    "resposta": "O aluno só pode acumular o Auxílio Moradia com a Bolsa de Iniciação Acadêmica."
+  },
+  {
+    "intent": "resposta_38",
+    "pergunta": "Quanto tempo dura a Bolsa de Iniciação Acadêmica?",
+    "resposta": "O aluno pode permanecer na bolsa por no máximo 20 meses, totalizando dois anos."
+  },
+  {
+    "intent": "resposta_39",
+    "pergunta": "Quais são os cursos de graduação semipresenciais oferecidos pela UFC?",
+    "resposta": "As informações sobre os cursos semipresenciais podem ser obtidas diretamente no Instituto UFC Virtual."
+  },
+  {
+    "intent": "resposta_40",
+    "pergunta": "Como é feita a normalização do IRA Geral?",
+    "resposta": "O IRA Geral é normalizado usando a média e o desvio padrão dos rendimentos dos alunos ativos de cada curso."
+  },
+  {
+    "intent": "resposta_41",
+    "pergunta": "Qual é o impacto de uma reprovação por falta no IRA?",
+    "resposta": "A reprovação por falta tem um impacto negativo maior no IRA do que a reprovação por nota."
+  },
+  {
+    "intent": "resposta_42",
+    "pergunta": "Disciplinas aproveitadas entram no cálculo do IRA Individual?",
+    "resposta": "Não, disciplinas aproveitadas, tanto interna quanto externamente, não são consideradas no cálculo do IRA Individual."
+  },
+  {
+    "intent": "resposta_43",
+    "pergunta": "Atividades complementares de ensino afetam o IRA Individual?",
+    "resposta": "Não, atividades complementares de ensino não são incluídas no cálculo do IRA Individual."
+  },
+  {
+    "intent": "resposta_44",
+    "pergunta": "Qual é o procedimento para desbloquear a matrícula após reprovações por falta?",
+    "resposta": "O aluno deve procurar a Coordenação de Curso para orientação e regularização da matrícula."
+  },
+  {
+    "intent": "resposta_45",
+    "pergunta": "Quais são os prazos para solicitar trancamento parcial ou total de matrícula?",
+    "resposta": "Os prazos estão estabelecidos no Calendário Universitário da UFC."
+  },
+  {
+    "intent": "resposta_46",
+    "pergunta": "Quais documentos são necessários para solicitar trancamento total de matrícula?",
+    "resposta": "Documentos comprobatórios da situação que justifica o trancamento, como atestado médico ou declaração de emprego."
+  },
+  {
+    "intent": "resposta_47",
+    "pergunta": "O trancamento parcial afeta o IRA Individual?",
+    "resposta": "Sim, o trancamento parcial de matrícula afeta o cálculo do IRA Individual."
+  },
+  {
+    "intent": "resposta_48",
+    "pergunta": "Como funciona a mobilidade acadêmica entre IFESs?",
+    "resposta": "O aluno deve procurar o setor responsável pela mobilidade em sua instituição de origem e seguir os procedimentos estabelecidos."
+  },
+  {
+    "intent": "resposta_49",
+    "pergunta": "Quais são os requisitos para participar do Programa de Mobilidade Acadêmica?",
+    "resposta": "Os requisitos são definidos pela instituição de origem do aluno."
+  },
+  {
+    "intent": "resposta_50",
+    "pergunta": "O aluno especial pode cursar disciplinas em qualquer curso da UFC?",
+    "resposta": "Não, o aluno especial deve obter consentimento da coordenação de cada curso para se matricular nas disciplinas desejadas."
+  },
+  {
+    "intent": "resposta_51",
+    "pergunta": "O aluno especial pode solicitar aproveitamento de disciplinas cursadas na UFC?",
+    "resposta": "Sim, o aproveitamento de disciplinas deve ser solicitado no momento do ingresso no curso."
+  },
+  {
+    "intent": "resposta_52",
+    "pergunta": "Quais são os requisitos para solicitar mudança de curso via SiSU?",
+    "resposta": "Os requisitos são estabelecidos em edital específico, com base na nota do Enem e em critérios definidos pela Prograd."
+  },
+  {
+    "intent": "resposta_53",
+    "pergunta": "Como funciona o processo de transferência de outras IES para a UFC?",
+    "resposta": "A transferência é regida por edital específico e depende da nota do Enem, além de outros critérios estabelecidos."
+  },
+  {
+    "intent": "resposta_54",
+    "pergunta": "Quais são os benefícios oferecidos pelo Restaurante Universitário (RU)?",
+    "resposta": "O RU oferece refeições subsidiadas aos alunos de graduação."
+  },
+  {
+    "intent": "resposta_55",
+    "pergunta": "Quais são as ações da Divisão Médico-Odontológica da PRAE?",
+    "resposta": "A divisão oferece atendimento médico e odontológico aos alunos de graduação."
+  },
+  {
+    "intent": "resposta_56",
+    "pergunta": "O Apoio Psicopedagógico da PRAE oferece quais serviços?",
+    "resposta": "O apoio inclui orientação psicológica e pedagógica aos alunos."
+  },
+  {
+    "intent": "resposta_57",
+    "pergunta": "Quais são as atividades de Desporto e Lazer oferecidas pela PRAE?",
+    "resposta": "A PRAE promove atividades esportivas e de lazer para os alunos de graduação."
+  },
+  {
+    "intent": "resposta_58",
+    "pergunta": "Como o aluno pode obter informações sobre assistência estudantil?",
+    "resposta": "O aluno deve procurar diretamente a Pró-Reitoria de Assuntos Estudantis (PRAE)."
+  },
+  {
+    "intent": "resposta_59",
+    "pergunta": "Qual é a carga horária mínima do Estágio Curricular Supervisionado?",
+    "resposta": "A carga horária mínima é de 300 horas, conforme estabelecido no Art. 1º do regulamento."
+  },
+  {
+    "intent": "resposta_60",
+    "pergunta": "O estágio pode ser realizado em qualquer período do curso?",
+    "resposta": "Não, o estágio deve ser realizado a partir do 7º semestre, conforme previsto no Art. 2º."
+  },
+  {
+    "intent": "resposta_61",
+    "pergunta": "Quais são os objetivos do Estágio Curricular Supervisionado?",
+    "resposta": "O estágio visa proporcionar ao discente a aplicação prática dos conhecimentos adquiridos durante o curso."
+  },
+  {
+    "intent": "resposta_62",
+    "pergunta": "Quem é responsável pela supervisão do estágio?",
+    "resposta": "O estágio é supervisionado por um professor orientador designado pela coordenação do curso, conforme Art. 4º."
+  },
+  {
+    "intent": "resposta_63",
+    "pergunta": "Qual é o papel do professor orientador?",
+    "resposta": "O professor orientador acompanha e avalia o desenvolvimento do estágio, conforme Art. 4º."
+  },
+  {
+    "intent": "resposta_64",
+    "pergunta": "O estágio pode ser realizado em mais de um local?",
+    "resposta": "Sim, o estágio pode ser realizado em mais de um local, desde que a carga horária mínima seja cumprida, de acordo com o Art. 6º."
+  },
+  {
+    "intent": "resposta_65",
+    "pergunta": "Quais são os requisitos para aprovação no estágio?",
+    "resposta": "Para aprovação, o discente deve cumprir a carga horária mínima e obter aproveitamento satisfatório, conforme Art. 7º."
+  },
+  {
+    "intent": "resposta_66",
+    "pergunta": "Como é feita a avaliação do estágio?",
+    "resposta": "A avaliação é realizada pelo professor orientador, com base no relatório final apresentado pelo discente, conforme Art. 7º."
+  },
+  {
+    "intent": "resposta_67",
+    "pergunta": "O estágio pode ser realizado em outra cidade?",
+    "resposta": "Sim, o estágio pode ser realizado em outra cidade, desde que haja concordância da coordenação do curso, conforme Art. 6º."
+  },
+  {
+    "intent": "resposta_68",
+    "pergunta": "Existe alguma bolsa ou auxílio para realização do estágio?",
+    "resposta": "O regulamento não menciona a existência de bolsas ou auxílios específicos para a realização do estágio."
+  },
+  {
+    "intent": "resposta_69",
+    "pergunta": "O estágio pode ser realizado em horário noturno ou aos finais de semana?",
+    "resposta": "Sim, desde que respeitada a carga horária máxima semanal estabelecida pela legislação trabalhista, conforme Art. 6º."
+  },
+  {
+    "intent": "resposta_70",
+    "pergunta": "Quais são os documentos necessários para iniciar o estágio?",
+    "resposta": "O discente deve apresentar o Termo de Compromisso de Estágio devidamente preenchido e assinado, conforme Art. 5º."
+  },
+  {
+    "intent": "resposta_71",
+    "pergunta": "O estágio pode ser realizado em empresa de propriedade da família do discente?",
+    "resposta": "Não há menção a essa possibilidade no regulamento."
+  },
+  {
+    "intent": "resposta_72",
+    "pergunta": "Existe algum seguro para o discente durante o estágio?",
+    "resposta": "O regulamento não menciona a existência de seguro específico para o estágio."
+  },
+  {
+    "intent": "resposta_73",
+    "pergunta": "O discente pode receber alguma remuneração durante o estágio?",
+    "resposta": "O regulamento não menciona a possibilidade de remuneração durante o estágio."
+  },
+  {
+    "intent": "resposta_74",
+    "pergunta": "Quais são as penalidades em caso de descumprimento do regulamento?",
+    "resposta": "O regulamento não especifica as penalidades em caso de descumprimento."
+  },
+  {
+    "intent": "resposta_75",
+    "pergunta": "O estágio pode ser realizado no exterior?",
+    "resposta": "O regulamento não menciona a possibilidade de realização do estágio no exterior."
+  },
+  {
+    "intent": "resposta_76",
+    "pergunta": "Existe algum prazo para entrega do relatório final?",
+    "resposta": "O regulamento não menciona um prazo específico para entrega do relatório final."
+  },
+  {
+    "intent": "resposta_77",
+    "pergunta": "O discente pode realizar o estágio em mais de uma instituição simultaneamente?",
+    "resposta": "O regulamento não menciona essa possibilidade."
+  },
+  {
+    "intent": "resposta_78",
+    "pergunta": "Existe algum modelo ou formato padrão para o relatório final?",
+    "resposta": "O regulamento não especifica um modelo ou formato padrão para o relatório final."
+  }
+]
