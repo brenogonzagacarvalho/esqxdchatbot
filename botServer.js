@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const { Telegraf } = require('telegraf');
 const app = express();
 const telegramBot = require('./telegramBot'); 
 const db = require('./database');

@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { Telegraf } = require('telegraf');
-const { classifier, respostasMap, trainChatbotFromTxt, loadClassifier } = require('./trainChatbot');
+const { classifier, respostasMap, loadClassifier } = require('./trainChatbot');
 const db = require('./database');
 const fs = require('fs');
 
@@ -58,8 +58,7 @@ async function startBot() {
     bot.start((ctx) => {
       const userId = ctx.from.id;
       userStates[userId] = { step: 'main_menu' };
-      ctx.reply('Olá! Sou o chatbot. Pergunte algo e tentarei ajudar!');
-      showMainMenu(ctx);
+      ctx.reply('Olá! Sou o chatbot. Pergunte algo e tentarei ajudar!');      showMainMenu(ctx); // Mostra o menu ao iniciar
     });
 
     bot.hears(['1', '1. Informações sobre estágio'], (ctx) => {
@@ -80,7 +79,7 @@ async function startBot() {
     bot.hears(['voltar', 'menu', 'voltar ao menu'], (ctx) => {
       userStates[ctx.from.id] = { step: 'main_menu' };
       ctx.reply('Voltando ao menu inicial...');
-      showMainMenu(ctx);
+      showMainMenu(ctx); // Mostra o menu ao voltar
     });
 
     bot.on('text', async (ctx) => {
@@ -90,29 +89,30 @@ async function startBot() {
       if (!userStates[userId]) userStates[userId] = { step: 'main_menu' };
       const userState = userStates[userId];
 
-      if (userState.step !== 'main_menu') {
-        console.log(`Pergunta recebida: "${userMessage}"`);
+      if (userState.step === 'main_menu') {
+        showMainMenu(ctx); // Mostra o menu se o usuário estiver no menu principal
+        return;
+      }
 
-        try {
-          const classificacoes = classifier.getClassifications(userMessage);
-          console.log(`Classificações para "${userMessage}":`, classificacoes);
+      console.log(`Pergunta recebida: "${userMessage}"`);
 
-          if (classificacoes.length > 0 && classificacoes[0].value >= 0.6) {
-            const resposta = respostasMap.get(classificacoes[0].label);
-            if (resposta) return ctx.reply(`Resposta: ${resposta}`);
-          }
+      try {
+        const classificacoes = classifier.getClassifications(userMessage);
+        console.log(`Classificações para "${userMessage}":`, classificacoes);
 
-          ctx.reply('Desculpe, não entendi sua pergunta. Vou registrar para melhorar no futuro.');
-          await db.query('INSERT INTO unanswered_questions (user_id, question) VALUES (?, ?)', [
-            userId,
-            userMessage,
-          ]);
-        } catch (err) {
-          console.error('Erro ao processar pergunta:', err);
-          ctx.reply('Ocorreu um erro ao processar sua pergunta. Por favor, tente novamente.');
+        if (classificacoes.length > 0 && classificacoes[0].value >= 0.6) {
+          const resposta = respostasMap.get(classificacoes[0].label);
+          if (resposta) return ctx.reply(`Resposta: ${resposta}`);
         }
-      } else {
-        showMainMenu(ctx);
+
+        ctx.reply('Desculpe, não entendi sua pergunta. Vou registrar para melhorar no futuro.');
+        await db.query('INSERT INTO unanswered_questions (user_id, question) VALUES (?, ?)', [
+          userId,
+          userMessage,
+        ]);
+      } catch (err) {
+        console.error('Erro ao processar pergunta:', err);
+        ctx.reply('Ocorreu um erro ao processar sua pergunta. Por favor, tente novamente.');
       }
     });
 
