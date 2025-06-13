@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const TOKEN = process.env.TELEGRAM_TOKEN;
 const bot = new Telegraf(TOKEN);
-
+console.log('TOKEN LIDO:', process.env.TELEGRAM_TOKEN);
 // Configuração do banco de dados (ajuste conforme seu .env)
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
