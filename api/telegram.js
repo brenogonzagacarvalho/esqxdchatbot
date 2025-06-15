@@ -2,82 +2,88 @@ const { Telegraf } = require('telegraf');
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-const TOKEN = process.env.TELEGRAM_TOKEN;
-const bot = new Telegraf(TOKEN);
-console.log('TOKEN LIDO:', process.env.TELEGRAM_TOKEN);
-// Configuração do banco de dados (ajuste conforme seu .env)
+// Otimização 1: Pré-carrega dados
+const perguntasRespostas = require('./public/perguntas_respostas.json');
+
+// Otimização 2: Pool de conexões otimizado
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-// Carrega perguntas e respostas
-const fs = require('fs');
-const path = require('path');
-const perguntasRespostas = JSON.parse(
-  fs.readFileSync(path.join(process.cwd(), 'public', 'perguntas_respostas.json'), 'utf-8')
-);
+// Otimização 3: Similaridade melhorada
+function encontrarResposta(perguntaUsuario) {
+  const perguntaLower = perguntaUsuario.toLowerCase();
+  const matchExato = perguntasRespostas.find(item => 
+    item.pergunta.toLowerCase() === perguntaLower
+  );
+  
+  if (matchExato) return matchExato.resposta;
 
-// Função simples de similaridade (pode trocar por embeddings depois)
-function encontrarRespostaPorSimilaridade(perguntaUsuario) {
-  let melhorScore = 0;
-  let melhorResposta = null;
-  perguntasRespostas.forEach(({ pergunta, resposta }) => {
-    if (!pergunta || !resposta) return;
-    const score = perguntaUsuario.toLowerCase() === pergunta.toLowerCase() ? 1 : 0;
-    if (score > melhorScore) {
-      melhorScore = score;
-      melhorResposta = resposta;
-    }
-  });
-  return melhorScore > 0.8 ? melhorResposta : null;
+  // Fallback: busca por inclusão de palavras-chave
+  const palavras = perguntaLower.split(/\s+/);
+  const matchParcial = perguntasRespostas.find(item =>
+    palavras.some(palavra => 
+      item.pergunta.toLowerCase().includes(palavra)
+    )
+  );
+
+  return matchParcial?.resposta || null;
 }
 
-// Handler principal do bot
+// Otimização 4: Middleware de tempo de resposta
+bot.use(async (ctx, next) => {
+  const start = Date.now();
+  await next();
+  const duration = Date.now() - start;
+  console.log(`Tempo de resposta: ${duration}ms`);
+});
+
 bot.on('text', async (ctx) => {
   const userId = ctx.from.id;
   const userMessage = ctx.message.text.trim();
 
-  // Busca resposta
-  const resposta = encontrarRespostaPorSimilaridade(userMessage);
+  // Resposta prioritária
+  const resposta = encontrarResposta(userMessage);
 
   if (resposta) {
     await ctx.reply(resposta);
-  } else {
-    await ctx.reply('Desculpe, não encontrei uma resposta para sua pergunta. Ela será registrada para análise futura.');
-    // Salva no banco de dados
+    return; // Finaliza rápido se tiver resposta
+  }
+
+  // Processamento assíncrono não-bloqueante para perguntas sem resposta
+  setImmediate(async () => {
     try {
-      const conn = await pool.getConnection();
-      await conn.query(
+      const [rows] = await pool.query(
         'INSERT INTO unanswered_questions (user_id, question) VALUES (?, ?)',
         [userId, userMessage]
       );
-      conn.release();
     } catch (err) {
-      console.error('Erro ao salvar pergunta não respondida:', err);
+      console.error('Erro ao salvar pergunta:', err);
     }
-  }
+  });
+
+  await ctx.reply('Não entendi sua pergunta. Vou registrar para melhorar!');
 });
 
-// Webhook para Vercel
+// Webhook otimizado
 module.exports = async (req, res) => {
-  if (req.method === 'POST') {
-    // Garante que o corpo seja um objeto
-    if (typeof req.body === 'string') {
-      req.body = JSON.parse(req.body);
+  try {
+    if (req.method === 'POST') {
+      await bot.handleUpdate(req.body, res);
+    } else {
+      res.status(200).json({ status: 'ready' });
     }
-
-    try {
-      await bot.handleUpdate(req.body);
-      res.status(200).send('OK');
-    } catch (err) {
-      console.error('Erro no webhook:', err);
-      res.status(500).send('Erro');
-    }
-  } else {
-    res.status(200).send('Webhook do Telegram ativo!');
+  } catch (err) {
+    console.error('Erro:', err);
+    res.status(500).json({ error: 'Internal error' });
   }
 };
+
+// Mantém a conexão quente (opcional)
+setInterval(() => pool.query('SELECT 1'), 300000);
