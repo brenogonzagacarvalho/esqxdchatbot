@@ -2,72 +2,138 @@
   {
     "intent": "resposta_0",
     "pergunta": "O que é o Estágio Curricular Supervisionado?",
-    "resposta": "O Estágio Curricular Supervisionado previsto no Projeto Pedagógico do Curso é"
+    "resposta": "📚 O Estágio Curricular Supervisionado é uma atividade obrigatória que integra teoria e prática profissional. Desenvolvido em ambientes reais de trabalho, ele: \n\n• Complementa sua formação acadêmica \n• Tem carga horária definida no projeto pedagógico \n• É regulamentado pela UFC \n\n🔍 *Dica:* Consulte o Art. 1º do regulamento no site da coordenação.",
+    "variacoes": [
+      "Qual o objetivo do estágio supervisionado?",
+      "Para que serve o estágio curricular?",
+      "Explique sobre o estágio obrigatório"
+    ],
+    "tags": ["estágio", "curricular", "supervisionado"]
   },
   {
     "intent": "resposta_1",
-    "pergunta": "Quais são os critérios para a matrícula em estágio?",
-    "resposta": "Os critérios para efetivação da matrícula de discente em atividade de estágio"
+    "pergunta": "Quais são os critérios para matrícula em estágio?",
+    "resposta": "✅ Requisitos para matrícula em estágio: \n\n1. Matrícula regular no curso \n2. Cursar disciplinas pré-requisito \n3. Para estágio obrigatório: matrícula no componente correspondente \n\n📌 *Atenção:* Confira a lista completa no edital de estágio do seu curso.",
+    "variacoes": [
+      "Quais os requisitos para fazer estágio?",
+      "Preciso de algo antes de me matricular no estágio?",
+      "Como me inscrevo para estágio curricular?"
+    ],
+    "tags": ["matrícula", "requisitos", "estágio"]
   },
   {
     "intent": "resposta_2",
     "pergunta": "O que é o Termo de Compromisso de Estágio?",
-    "resposta": "O Termo de Compromisso de Estágio é um documento que formaliza a relação"
+    "resposta": "📝 O Termo de Compromisso de Estágio (TCE) é o documento que formaliza o estágio entre: \n\n• Universidade \n• Empresa concedente \n• Estudante \n\nEle deve conter: \n- Atividades a serem desenvolvidas \n- Carga horária \n- Duração \n- Supervisão \n\n🔗 *Modelo disponível:* Setor de Estágios da UFC",
+    "variacoes": [
+      "Para que serve o TCE?",
+      "O que é o documento de estágio?",
+      "Preciso assinar algum termo para estágio?"
+    ],
+    "tags": ["termo", "documento", "estágio"]
   },
   {
     "intent": "resposta_3",
     "pergunta": "O que é o Núcleo de Práticas da UFC em Quixadá?",
-    "resposta": "O Núcleo de Práticas da UFC em Quixadá é uma unidade que oferece"
+    "resposta": "🏛️ O Núcleo de Práticas (como o NPI) é uma unidade que permite: \n\n• Aplicar conhecimentos em projetos reais \n• Desenvolver soluções tecnológicas \n• Integrar ensino e prática profissional \n\n📍 *Localização:* Bloco X, 1º andar \n🕒 *Funcionamento:* Seg-Sex, 8h-18h",
+    "variacoes": [
+      "O que faz o Núcleo de Práticas?",
+      "Como participar do NPI?",
+      "Onde fica o núcleo de informática?"
+    ],
+    "tags": ["núcleo", "práticas", "projetos"]
   },
   {
     "intent": "resposta_4",
     "pergunta": "Quais são as modalidades de estágio curricular supervisionado?",
-    "resposta": "O Estágio Curricular Supervisionado é executado nas seguintes modalidades:"
+    "resposta": "🔹 **Estágio Obrigatório:** \n- Definido no projeto pedagógico \n- Requisito para diploma \n\n🔹 **Estágio Não Obrigatório:** \n- Atividade opcional \n- Acréscimo à carga horária \n\n📊 *Carga horária típica:* 300-400 horas",
+    "variacoes": [
+      "Tipos de estágio na UFC",
+      "Diferença entre estágio obrigatório e não obrigatório",
+      "Quantas modalidades de estágio existem?"
+    ],
+    "tags": ["modalidades", "estágio", "tipos"]
   },
   {
     "intent": "resposta_5",
     "pergunta": "Como são realizados os estágios externos?",
-    "resposta": "Os estágios externos em empresa conveniada serão realizados mediante a"
+    "resposta": "🏢 **Estágio Externo:** \n\n1. Empresa deve ter convênio com a UFC \n2. Necessário: \n   - Supervisor na empresa \n   - Professor orientador \n   - Termo de Compromisso \n\n🌐 *Lista de empresas conveniadas:* Disponível no SIGAA",
+    "variacoes": [
+      "Como estagiar em empresas?",
+      "Procedimento para estágio externo",
+      "Preciso de convênio para estágio?"
+    ],
+    "tags": ["externo", "empresa", "convênio"]
   },
   {
     "intent": "resposta_6",
     "pergunta": "Como são realizados os estágios internos?",
-    "resposta": "O estágio interno consiste nas atividades “Estágio Supervisionado I” e “Estágio"
+    "resposta": "🏫 **Estágio Interno:** \n\n• Desenvolvido dentro da UFC (ex: NPI) \n• Inclui as disciplinas: \n   - Estágio Supervisionado I \n   - Estágio Supervisionado II \n\n📌 *Requisito:* Compatibilidade com o projeto pedagógico",
+    "variacoes": [
+      "Como funciona estágio na universidade?",
+      "O que é estágio interno?",
+      "Posso estagiar no NPI?"
+    ],
+    "tags": ["interno", "UFC", "núcleo"]
   },
   {
     "intent": "resposta_7",
     "pergunta": "Qual a carga horária das atividades de estágio?",
-    "resposta": "As atividades Estágio Supervisionado I e Estágio Supervisionado II terão, cada"
+    "resposta": "⏱️ Carga horária típica por curso: \n\n• Engenharia de Software: 320h \n• Ciência da Computação: 300h \n• Outros: Consultar projeto pedagógico \n\n📅 *Distribuição:* Normalmente 2 semestres",
+    "variacoes": [
+      "Quantas horas tem o estágio?",
+      "Duração do estágio supervisionado",
+      "Carga horária mínima para estágio"
+    ],
+    "tags": ["carga horária", "horas", "duração"]
   },
   {
     "intent": "resposta_8",
-    "pergunta": "Como é o aproveitamento de atuação profissional do discente na área do curso?",
-    "resposta": "O aproveitamento de atuação profissional do discente na área do curso pode"
+    "pergunta": "Como aproveitar experiência profissional como estágio?",
+    "resposta": "💼 **Aproveitamento de Experiência:** \n\nDocumentos necessários: \n1. Carteira de trabalho ou contrato \n2. Relatório detalhado das atividades \n3. Comprovação de tempo de serviço \n\n📝 *Processo:* Solicitar na coordenação do curso",
+    "variacoes": [
+      "Posso validar trabalho como estágio?",
+      "Como converter experiência em horas de estágio?",
+      "Já trabalho na área, preciso estagiar?"
+    ],
+    "tags": ["experiência", "aproveitamento", "validar"]
   },
   {
     "intent": "resposta_9",
-    "pergunta": "Quais são as responsabilidades do discente em estágio supervisionado?",
-    "resposta": "Cabe ao discente em estágio supervisionado: (I) Apresentar Plano de Trabalho"
+    "pergunta": "Quais são as responsabilidades do aluno em estágio?",
+    "resposta": "📋 **Deveres do Estagiário:** \n\n1. Entregar Plano de Trabalho \n2. Cumprir programação e normas \n3. Elaborar Relatório Final \n4. Apresentar Seminário \n\n⚠️ *Atenção:* Prazos são rigorosos!",
+    "variacoes": [
+      "O que devo fazer durante o estágio?",
+      "Quais obrigações tenho como estagiário?",
+      "Documentos que preciso entregar no estágio"
+    ],
+    "tags": ["responsabilidades", "aluno", "deveres"]
   },
   {
     "intent": "resposta_10",
     "pergunta": "Quais são as responsabilidades do supervisor de estágio?",
-    "resposta": "Cabe ao supervisor: Apresentar a Avaliação do Rendimento do discente ao"
-  },
+    "resposta": "👔 **Atribuições do Supervisor:** \n\n• Orientar atividades práticas \n• Avaliar rendimento do estagiário \n• Garantir cumprimento do Termo \n• Emitir avaliação final \n\n📞 *Canais:* supervisor.estagios@ufc.br",
+    "variacoes": [
+      "O que faz o supervisor de estágio?",
+      "Quem me avalia no estágio?",
+      "Responsabilidades da empresa no estágio"
+    ],
+    "tags": ["supervisor", "empresa", "avaliação"]
+  },  
   {
     "intent": "resposta_11",
     "pergunta": "Quais são as responsabilidades do professor orientador de estágio?",
-    "resposta": "Cabe ao professor orientador: (I) Avaliar o Plano de Trabalho apresentado pelo"
+    "resposta": "Cabe ao professor orientador: (I) Avaliar o Plano de Trabalho apresentado pelo discente; (II) Acompanhar o desenvolvimento do estágio; (III) Orientar o aluno na elaboração do relatório final; e (IV) Realizar a avaliação final do estagiário, considerando o relatório e a avaliação do supervisor."
   },
   {
     "intent": "resposta_12",
     "pergunta": "Como é realizada a avaliação do discente nas atividades de Estágio Curricular",
-    "resposta": "A avaliação do discente nas atividades de Estágio Curricular Supervisionado"
+    "resposta": "A avaliação do discente nas atividades de Estágio Curricular Supervisionado é realizada pelo professor orientador e leva em conta a avaliação do supervisor na empresa, o relatório final de estágio apresentado pelo aluno, e, em alguns casos, a apresentação de um seminário. A ausência de documentos como o relatório final ou o termo de compromisso pode invalidar a atividade."
   },
   {
     "intent": "resposta_13",
     "pergunta": "O que acontece em caso de reprovação no estágio curricular supervisionado?",
-    "resposta": "Em caso de reprovação, o discente deverá solicitar matrícula no componente no"
+    "resposta": "Em caso de reprovação, o discente deverá solicitar matrícula no componente curricular de estágio novamente no semestre seguinte em que a disciplina for ofertada. A reprovação pode ocorrer por não apresentar a documentação exigida, como o plano de trabalho ou o relatório final, dentro dos prazos estipulados."
   },
   {
     "intent": "resposta_14",
@@ -393,5 +459,136 @@
     "intent": "resposta_78",
     "pergunta": "Existe algum modelo ou formato padrão para o relatório final?",
     "resposta": "O regulamento não especifica um modelo ou formato padrão para o relatório final."
+  },
+  {
+    "intent": "resposta_79",
+    "pergunta": "Como faço para solicitar a quebra de pré-requisito para cursar a disciplina 'X'?",
+    "resposta": "A solicitação de quebra de pré-requisito deve ser feita via formulário específico, disponível no site da coordenação. Você precisará da justificativa do professor da disciplina que deseja cursar e seu histórico acadêmico. O pedido será analisado pelo colegiado do curso."
+  },
+  {
+    "intent": "resposta_80",
+    "pergunta": "Perdi o prazo da matrícula curricular. Qual o procedimento para o ajuste de matrícula e quais as datas?",
+    "resposta": "Após a matrícula curricular, há o período de ajuste de matrícula. As datas são sempre divulgadas no Calendário Universitário. Você deve realizar a solicitação de inclusão de disciplinas pelo SIGAA nesse período. Em casos excepcionais, procure a coordenação com uma justificativa formal."
+  },
+  {
+    "intent": "resposta_81",
+    "pergunta": "A turma de 'Inteligência Artificial' está lotada. Existe a possibilidade de serem ofertadas mais vagas ou uma nova turma?",
+    "resposta": "A criação de novas vagas ou turmas depende da disponibilidade do professor e do departamento. Envie um e-mail para a coordenação com seu nome e o de outros interessados para que possamos avaliar a demanda e verificar a possibilidade junto ao professor responsável."
+  },
+  {
+    "intent": "resposta_82",
+    "pergunta": "Quais as disciplinas optativas de Engenharia de Software serão ofertadas no próximo semestre?",
+    "resposta": "A lista de disciplinas optativas é definida semestralmente e divulgada no site do curso, geralmente um mês antes do período de matrícula. Fique atento aos comunicados da coordenação por e-mail e nos canais oficiais."
+  },
+  {
+    "intent": "resposta_83",
+    "pergunta": "Estou com dificuldades em 'Cálculo Vetorial'. Existe algum monitor para essa disciplina ou grupo de estudos recomendado pela coordenação?",
+    "resposta": "Sim, geralmente as disciplinas de base como Cálculo possuem monitores. Você pode consultar a lista de monitores e seus horários no site do seu curso ou do Departamento de Computação. A coordenação também incentiva a formação de grupos de estudo entre os alunos."
+  },
+  {
+    "intent": "resposta_84",
+    "pergunta": "Até quando posso solicitar o cancelamento justificado de uma disciplina sem afetar meu IRA?",
+    "resposta": "O trancamento parcial de matrícula, que é o cancelamento de uma ou mais disciplinas, pode ser solicitado via SIGAA dentro do prazo estabelecido no Calendário Universitário. Fique atento, pois o cancelamento fora do prazo só é permitido em casos excepcionais e documentados."
+  },
+  {
+    "intent": "resposta_85",
+    "pergunta": "A coordenação tem uma lista de empresas de tecnologia na região com convênio ativo para estágio?",
+    "resposta": "Sim, a coordenação possui uma lista de empresas parceiras. Além disso, o Setor de Estágios da UFC mantém um portal com as oportunidades e empresas conveniadas. Você pode consultar ambos para encontrar uma vaga."
+  },
+  {
+    "intent": "resposta_86",
+    "pergunta": "Meu Termo de Compromisso de Estágio precisa ser assinado. Qual o fluxo correto? Devo entregar a via física na coordenação ou o processo é online?",
+    "resposta": "Atualmente, o fluxo de assinatura do Termo de Compromisso de Estágio (TCE) é feito pelo SEI (Sistema Eletrônico de Informações). Você deve iniciar um processo, anexar o termo preenchido e assinado por você e pela empresa, e encaminhar para a assinatura da coordenação e do setor de estágios."
+  },
+  {
+    "intent": "resposta_87",
+    "pergunta": "Já trabalho na área de desenvolvimento. Como posso validar minha experiência profissional como estágio obrigatório?",
+    "resposta": "Você pode solicitar o aproveitamento de atuação profissional. Para isso, é necessário apresentar documentos como carteira de trabalho assinada ou contrato de prestação de serviços, além de um relatório detalhado das atividades que você exerce, comprovando a compatibilidade com a área do curso."
+  },
+  {
+    "intent": "resposta_88",
+    "pergunta": "Como é definido o meu professor orientador de estágio? Eu posso escolher?",
+    "resposta": "O aluno pode conversar com um professor que tenha afinidade com a área do seu estágio e convidá-lo para ser seu orientador. Após o aceite do professor, você deve informar o nome dele à coordenação no momento da formalização do estágio."
+  },
+  {
+    "intent": "resposta_89",
+    "pergunta": "Onde encontro as linhas de pesquisa dos professores de Engenharia de Software para escolher um orientador de TCC?",
+    "resposta": "As linhas de pesquisa de cada professor estão disponíveis no site do curso, na seção 'Corpo Docente'. Recomenda-se também verificar as publicações recentes dos professores na plataforma Lattes para entender seus interesses atuais de pesquisa."
+  },
+  {
+    "intent": "resposta_90",
+    "pergunta": "Quais são os prazos para depósito da proposta e da versão final do TCC neste semestre?",
+    "resposta": "Os prazos para todas as etapas do TCC (proposta, qualificação, depósito e defesa) são definidos no início de cada semestre e publicados em um edital específico no site do curso. Consulte o edital de TCC do semestre vigente."
+  },
+  {
+    "intent": "resposta_91",
+    "pergunta": "Existe um template/modelo oficial da UFC Quixadá para a formatação do documento do TCC?",
+    "resposta": "Sim. O modelo oficial para formatação de trabalhos acadêmicos, incluindo o TCC, segue as normas da ABNT e está disponível para download no site da Biblioteca do Campus."
+  },
+  {
+    "intent": "resposta_92",
+    "pergunta": "É possível desenvolver o TCC em parceria com uma empresa? Qual o procedimento nesse caso?",
+    "resposta": "Sim, é possível e incentivado. Você precisará de um professor orientador da UFC e um supervisor na empresa. O plano de trabalho do TCC deve ser aprovado por ambos, e pode ser necessário um termo de confidencialidade, dependendo do projeto."
+  },
+  {
+    "intent": "resposta_93",
+    "pergunta": "Participei de um hackathon no fim de semana. Isso conta como atividade complementar? Como faço para registrar as horas?",
+    "resposta": "Sim, participação em hackathons, competições de programação e eventos similares contam como atividades complementares. Para registrar, você deve abrir um processo de aproveitamento de horas no SIGAA e anexar o certificado de participação."
+  },
+  {
+    "intent": "resposta_94",
+    "pergunta": "Cursos da Alura, Coursera ou outras plataformas podem ser validados como atividade complementar? Qual a carga horária?",
+    "resposta": "Sim, cursos online relevantes para a área de Engenharia de Software podem ser validados. A carga horária aproveitada é definida pelo regulamento de atividades complementares e analisada pelo seu coordenador. Geralmente, há um limite máximo de horas para essa categoria."
+  },
+  {
+    "intent": "resposta_95",
+    "pergunta": "Meu IRA está baixo. Quais estratégias a coordenação recomenda para que eu possa recuperá-lo?",
+    "resposta": "Recomendamos focar em um número menor de disciplinas por semestre para garantir um bom desempenho. Procure os monitores e professores para tirar dúvidas, participe de grupos de estudo e organize um cronograma. Se necessário, agende uma conversa com o coordenador para montar um plano de estudos."
+  },
+  {
+    "intent": "resposta_96",
+    "pergunta": "Preciso usar o Laboratório de Redes e Hardware (LARD) para um projeto. Qual o procedimento para ter acesso fora do horário de aula?",
+    "resposta": "O acesso aos laboratórios fora do horário de aula precisa ser solicitado à chefia do departamento. Normalmente, é necessário preencher um formulário com a justificativa do projeto e o acompanhamento de um professor ou monitor responsável."
+  },
+  {
+    "intent": "resposta_97",
+    "pergunta": "Como posso saber sobre os próximos eventos de tecnologia, palestras ou workshops que acontecerão no campus?",
+    "resposta": "A melhor forma é acompanhar os canais de comunicação do curso: o site oficial, os grupos de e-mail e as redes sociais. O Centro Acadêmico (C.A.) do curso também divulga ativamente todos os eventos."
+  },
+  {
+    "intent": "resposta_98",
+    "pergunta": "Não estou me sentindo bem academicamente e emocionalmente. A UFC Quixadá oferece algum tipo de apoio psicopedagógico?",
+    "resposta": "Sim, a UFC oferece apoio através da Pró-Reitoria de Assuntos Estudantis (PRAE). No campus de Quixadá, você pode procurar o setor responsável para agendar uma conversa e receber orientação psicológica e pedagógica. Não hesite em buscar ajuda."
+  },
+  {
+    "intent": "resposta_99",
+    "pergunta": "Quais são os procedimentos para solicitar a revisão de uma nota de disciplina?",
+    "resposta": "Para solicitar a revisão de nota, você deve formalizar o pedido por escrito ao professor responsável pela disciplina, dentro do prazo estipulado no regulamento acadêmico. Caso não obtenha resposta satisfatória, pode recorrer à coordenação do curso."
+  },
+  {
+    "intent": "resposta_100",
+    "pergunta": "Como posso participar de projetos de extensão ou pesquisa na UFC Quixadá?",
+    "resposta": "Você pode se inscrever em projetos de extensão e pesquisa através do site do curso ou diretamente com os professores. Fique atento aos editais e chamadas para participação, que são divulgados periodicamente."
+  },
+  {
+    "intent": "resposta_101",
+    "pergunta": "Quais são os critérios para a concessão de bolsas de iniciação científica?",
+    "resposta": "As bolsas de iniciação científica são concedidas com base em edital específico, que considera o desempenho acadêmico (IRA), a relevância do projeto de pesquisa e a disponibilidade orçamentária. É necessário ter um orientador vinculado ao curso."
+  },
+  {
+    "intent": "resposta_102",
+    "pergunta": "Como posso me inscrever para o programa de intercâmbio acadêmico?",
+    "resposta": "As inscrições para o programa de intercâmbio acadêmico são feitas através do site da Pró-Reitoria de Relações Internacionais (PRRI). Fique atento aos editais e prazos específicos para cada semestre."
+  },
+  {
+    "intent": "resposta_103",
+    "pergunta": "Quais são as oportunidades de estágio oferecidas pelo Núcleo de Práticas da UFC Quixadá?",
+    "resposta": "O Núcleo de Práticas oferece estágios em diversas áreas, principalmente em projetos de tecnologia e inovação. As oportunidades são divulgadas no site do núcleo e nas redes sociais."
+  },
+  {
+    "intent": "resposta_104",
+    "pergunta": "Como posso participar do Centro Acadêmico (C.A.) do curso?",
+    "resposta": "Para participar do C.A., você pode se inscrever nas eleições anuais ou entrar em contato com os membros atuais para saber como contribuir com as atividades e eventos promovidos pelo centro."
   }
+  
 ]
