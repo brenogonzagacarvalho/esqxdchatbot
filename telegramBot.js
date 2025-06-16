@@ -8,6 +8,7 @@ const TOKEN = process.env.TELEGRAM_TOKEN;
 const bot = new Telegraf(TOKEN);
 const userStates = {};
 const perguntasRespostas = [];
+const userData = {}; // Para armazenar dados do usuário durante a conversa
 
 // Função de similaridade melhorada
 function calculateSimilarity(str1, str2) {
@@ -20,6 +21,21 @@ function calculateSimilarity(str1, str2) {
 
 async function initializeDatabase() {
   try {
+    // Tabela de histórico de chat atualizada
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS chat_history (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id BIGINT NOT NULL,
+        user_message TEXT NOT NULL,
+        bot_response TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        intent VARCHAR(255),
+        confidence FLOAT,
+        INDEX (user_id)  -- Adiciona índice para melhor performance
+      )
+    `);
+
+    // Suas outras tabelas...
     await db.query(`
       CREATE TABLE IF NOT EXISTS unanswered_questions (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -28,7 +44,17 @@ async function initializeDatabase() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log('Banco de dados inicializado com sucesso.');
+
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS user_academic_data (
+        user_id BIGINT PRIMARY KEY,
+        matricula VARCHAR(20),
+        semestre INT,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      )
+    `);
+
+    console.log('Todas as tabelas foram verificadas/criadas com sucesso.');
   } catch (err) {
     console.error('Erro ao inicializar o banco de dados:', err);
     throw err;
@@ -42,6 +68,7 @@ function showMainMenu(ctx, message = 'Escolha uma opção:') {
         ['📚 Informações sobre estágio'],
         ['🎓 Informações sobre matrícula'],
         ['❓ Outras dúvidas'],
+        ['📝 Registrar dados acadêmicos'],
         ['🏠 Menu principal']
       ],
       resize_keyboard: true,
@@ -68,13 +95,33 @@ function findBestMatch(perguntaUsuario) {
   return bestMatch;
 }
 
+async function handlerChatHistory(ctx, userMessage, botResponse, intent = null, confidence = null) {
+  const userId = ctx.from.id;
+  try {
+    await db.query(
+      'INSERT INTO chat_history (user_id, user_message, bot_response, intent, confidence) VALUES (?, ?, ?, ?, ?)',
+      [userId, userMessage, botResponse, intent, confidence]
+    );
+    console.log(`Histórico registrado para usuário ${userId}`);
+  } catch (err) {
+    console.error('Erro ao registrar histórico:', err);
+    // Tenta criar a tabela se não existir
+    if (err.code === 'ER_NO_SUCH_TABLE' || err.code === 'ER_BAD_FIELD_ERROR') {
+      console.log('Tabela chat_history não encontrada ou incompleta, tentando recriar...');
+      await initializeDatabase();
+      await handlerChatHistory(ctx, userMessage, botResponse, intent, confidence); // Tenta novamente
+    }
+  }
+}
+
 async function handleUnansweredQuestion(ctx, question) {
   const userId = ctx.from.id;
   try {
-    await db.query('INSERT INTO unanswered_questions (user_id, question) VALUES (?, ?)', 
-      [userId, question]);
+    await db.query(
+      'INSERT INTO unanswered_questions (user_id, question) VALUES (?, ?)',
+      [userId, question]
+    );
     
-    // Sugere perguntas similares
     const suggestions = perguntasRespostas
       .map(item => ({
         question: item.pergunta,
@@ -84,18 +131,16 @@ async function handleUnansweredQuestion(ctx, question) {
       .sort((a, b) => b.similarity - a.similarity)
       .slice(0, 3);
     
-    if (suggestions.length > 0) {
-      let reply = 'Não entendi completamente, mas talvez você queira saber sobre:\n';
-      reply += suggestions.map((s, i) => 
-        `${i+1}. "${s.question.substring(0, 50)}${s.question.length > 50 ? '...' : ''}"`).join('\n');
-      reply += '\n\nPor favor, selecione uma opção ou reformule sua pergunta.';
-      return ctx.reply(reply);
-    }
+    let reply = 'Não entendi completamente, mas talvez você queira saber sobre:\n';
+    reply += suggestions.map((s, i) => 
+      `${i+1}. "${s.question.substring(0, 50)}${s.question.length > 50 ? '...' : ''}"`).join('\n');
+    reply += '\n\nPor favor, selecione uma opção ou reformule sua pergunta.';
     
-    return ctx.reply('Não encontrei uma resposta para sua pergunta. Um humano irá responder em breve!');
+    await ctx.reply(reply);
+    await handlerChatHistory(ctx, question, reply, 'unknown', 0);
   } catch (err) {
-    console.error('Erro ao registrar pergunta não respondida:', err);
-    return ctx.reply('Ocorreu um erro ao processar sua pergunta. Tente novamente mais tarde.');
+    console.error('Erro ao registrar pergunta:', err);
+    await ctx.reply('Ocorreu um erro. Por favor, tente novamente.');
   }
 }
 
@@ -112,14 +157,14 @@ async function startBot() {
         pergunta: item.pergunta,
         resposta: item.resposta
       });
-      
       classifier.addDocument(item.pergunta, item.intent);
       respostasMap.set(item.intent, item.resposta);
     });
 
-    classifier.train();
+    await classifier.train();
     console.log('Chatbot treinado e pronto.');
 
+    // Handlers
     bot.start((ctx) => {
       const userId = ctx.from.id;
       userStates[userId] = { step: 'main_menu' };
@@ -149,79 +194,118 @@ async function startBot() {
       });
     });
 
+    bot.hears(['📝 registrar dados acadêmicos', 'registrar'], (ctx) => {
+      userStates[ctx.from.id] = { step: 'awaiting_matricula' };
+      ctx.reply('Por favor, digite seu número de matrícula:', {
+        reply_markup: { remove_keyboard: true }
+      });
+    });
+
     bot.hears(['🏠 menu principal', 'menu', 'voltar'], (ctx) => {
       userStates[ctx.from.id] = { step: 'main_menu' };
       showMainMenu(ctx, 'Voltando ao menu principal:');
     });
 
     bot.on('text', async (ctx) => {
-  const userId = ctx.from.id;
-  const userMessage = ctx.message.text.trim();
+      const userId = ctx.from.id;
+      const userMessage = ctx.message.text.trim();
+      const currentState = userStates[userId] || { step: 'main_menu' };
 
-  // Ignorar mensagens muito curtas
-  if (userMessage.length < 3) return;
-
-  try {
-    // 1. Tentar classificação direta
-    const classifications = classifier.getClassifications(userMessage);
-    const bestMatch = findBestMatch(userMessage); // Função de similaridade
-
-    // 2. Definir resposta com base na melhor correspondência
-    let resposta = null;
-    
-    if (classifications[0] && classifications[0].value >= 0.7) {
-      resposta = respostasMap.get(classifications[0].label);
-    } else if (bestMatch.similarity >= 0.6) {
-      resposta = bestMatch.answer;
-    }
-
-    // 3. Enviar resposta simplificada
-    if (resposta) {
-      await ctx.reply(resposta); // Resposta direta sem cabeçalhos
-      
-      // 4. Perguntar se precisa de mais algo
-      await ctx.reply('Precisa de mais alguma informação?', {
-        reply_markup: {
-          inline_keyboard: [
-            [
-              { text: 'Sim, outra dúvida', callback_data: 'sim' },
-              { text: 'Não, obrigado', callback_data: 'nao' }
-            ]
-          ]
+      // Fluxo de registro de dados acadêmicos
+      if (currentState.step === 'awaiting_matricula') {
+        if (/^\d{6,10}$/.test(userMessage)) {
+          userData[userId] = { matricula: userMessage };
+          userStates[userId].step = 'awaiting_semester';
+          await ctx.reply('Agora, digite seu semestre atual (1-10):');
+          return;
+        } else {
+          await ctx.reply('Formato inválido. Digite apenas números (6 a 10 dígitos):');
+          return;
         }
-      });
-    } else {
-      await handleUnansweredQuestion(ctx, userMessage);
-    }
+      }
 
-  } catch (err) {
-    console.error('Erro:', err);
-    await ctx.reply('Ocorreu um erro. Por favor, tente novamente.');
-  }
-});
+      if (currentState.step === 'awaiting_semester') {
+        const semestre = parseInt(userMessage);
+        if (semestre >= 1 && semestre <= 10) {
+          try {
+            await db.query(
+              'INSERT INTO user_academic_data (user_id, matricula, semestre) VALUES (?, ?, ?) ' +
+              'ON DUPLICATE KEY UPDATE matricula = VALUES(matricula), semestre = VALUES(semestre)',
+              [userId, userData[userId].matricula, semestre]
+            );
+            
+            await ctx.reply(`✅ Dados registrados com sucesso!\nMatrícula: ${userData[userId].matricula}\nSemestre: ${semestre}`);
+            showMainMenu(ctx);
+            userStates[userId] = { step: 'main_menu' };
+            return;
+          } catch (err) {
+            console.error('Erro ao salvar dados:', err);
+            await ctx.reply('Ocorreu um erro. Por favor, tente novamente mais tarde.');
+            return;
+          }
+        } else {
+          await ctx.reply('Semestre inválido. Digite um número entre 1 e 10:');
+          return;
+        }
+      }
 
-// Handler para os botões de feedback
-bot.action('sim', async (ctx) => {
-  await ctx.answerCbQuery();
-  await ctx.reply('Por favor, digite sua próxima dúvida:');
-});
+      // Processamento normal de mensagens
+      if (userMessage.length < 3) return;
 
-bot.action('nao', async (ctx) => {
-  await ctx.answerCbQuery();
-  await ctx.reply('Ótimo! Se precisar de algo mais, estou à disposição. 😊');
-  showMainMenu(ctx); // Mostra o menu principal novamente
-});;
+      try {
+        const classifications = classifier.getClassifications(userMessage);
+        const bestClassification = classifications[0];
+        const bestMatch = findBestMatch(userMessage);
 
-    // Feedback handler
-    bot.action(/feedback_(yes|no)/, (ctx) => {
-      ctx.answerCbQuery();
-      ctx.reply('Obrigado pelo seu feedback! Vamos melhorar com base nele.');
+        let resposta = null;
+        let intent = null;
+        let confidence = null;
+
+        if (bestClassification && bestClassification.value >= 0.7) {
+          resposta = respostasMap.get(bestClassification.label);
+          intent = bestClassification.label;
+          confidence = bestClassification.value;
+        } else if (bestMatch.similarity >= 0.6) {
+          resposta = bestMatch.answer;
+          intent = 'similarity_match';
+          confidence = bestMatch.similarity;
+        }
+
+        if (resposta) {
+          await ctx.reply(resposta);
+          await handlerChatHistory(ctx, userMessage, resposta, intent, confidence);
+          
+          await ctx.reply('Precisa de mais alguma informação?', {
+            reply_markup: {
+              inline_keyboard: [
+                [{ text: 'Sim', callback_data: 'sim' }, { text: 'Não', callback_data: 'nao' }]
+              ]
+            }
+          });
+        } else {
+          await handleUnansweredQuestion(ctx, userMessage);
+        }
+      } catch (err) {
+        console.error('Erro:', err);
+        await ctx.reply('Ocorreu um erro. Por favor, tente novamente.');
+      }
     });
 
-    bot.action('menu', (ctx) => {
-      ctx.answerCbQuery();
-      userStates[ctx.from.id] = { step: 'main_menu' };
+    // Handlers de callback
+    bot.action('sim', async (ctx) => {
+      await ctx.answerCbQuery();
+      await ctx.reply('Por favor, digite sua próxima dúvida:');
+    });
+
+    bot.action('nao', async (ctx) => {
+      await ctx.answerCbQuery();
+      await ctx.reply('Ótimo! Se precisar de algo mais, estou à disposição. 😊');
       showMainMenu(ctx);
+    });
+
+    bot.action(/feedback_(yes|no)/, async (ctx) => {
+      await ctx.answerCbQuery();
+      await ctx.reply('Obrigado pelo seu feedback!');
     });
 
     await bot.launch();
@@ -235,6 +319,7 @@ bot.action('nao', async (ctx) => {
 process.on('unhandledRejection', (error) => {
   console.error('Unhandled Rejection:', error);
 });
+
 process.on('uncaughtException', (error) => {
   console.error('Uncaught Exception:', error);
 });
