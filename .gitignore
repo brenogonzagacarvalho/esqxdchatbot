@@ -46,3 +46,5 @@ dist
 # Serverless directories
 .serverless
 .vercel
+.venv
+__pychance

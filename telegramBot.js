@@ -3,6 +3,7 @@ const { Telegraf } = require('telegraf');
 const { classifier, respostasMap, loadClassifier } = require('./trainChatbot');
 const db = require('./database');
 const fs = require('fs');
+const flanT5Service = require('./flanT5Service');
 
 const TOKEN = process.env.TELEGRAM_TOKEN;
 const bot = new Telegraf(TOKEN);
@@ -248,6 +249,23 @@ Sou seu assistente virtual da UFC. Como posso ajudar?`);
     } else {
       await handleUnansweredQuestion(ctx, userMessage);
     }
+    const context = perguntasRespostas
+    .map(item => `Q: ${item.pergunta}\nA: ${item.resposta}`)
+    .join('\n\n');
+
+  try {
+    const generated = await flanT5Service.generateResponse(userMessage, context);
+    if (generated) {
+      await ctx.reply(generated);
+      await handlerChatHistory(ctx, userMessage, generated, 'flan-t5-generation', null);
+      return;
+    }
+  } catch (err) {
+    console.error('Erro ao gerar com FLAN-T5:', err);
+  }
+
+  // 5) Se ainda sem resposta, registra como não respondida
+  await handleUnansweredQuestion(ctx, userMessage);
   });
 
   bot.action('sim', async (ctx) => {
