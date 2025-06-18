@@ -3,7 +3,21 @@ transformers==4.34.0
 torch
 PyMySQL
 python-dotenv
-#py -3.11 -m venv ..venv\Scripts\activate
+#py -3.11 -m venv
+#.venv\Scripts\activate
 #pip install -r requirements.txt
 #pip install accelerate
 #pip install transformers[torch]
+#PORT=3000
+
+# Token do bot do Telegram
+#.env
+#TELEGRAM_TOKEN=6792602164:AAG5AW-NKxToJpshm1Pwjhnr86hfEc7Iyn0
+
+# Configurações do banco de dados MySQL
+#DB_HOST=esqxdchatbot.mysql.database.azure.com
+#DB_PORT=3306
+#DB_USER=esadmin
+#DB_PASSWORD=@esadmin123
+#DB_NAME=esqxdchatbot
+#HF_API_TOKEN=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
