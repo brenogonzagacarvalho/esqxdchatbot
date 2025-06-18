@@ -1,6 +1,7 @@
 python-telegram-bot==20.3
-transformers==4.34.0
-torch
+transformers>=4.32.2
+huggingface_hub>=0.16.4
+torch>=2.0.0
 PyMySQL
 python-dotenv
 #py -3.11 -m venv

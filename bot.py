@@ -1,7 +1,7 @@
 import json
 import os
 from difflib import SequenceMatcher
-from telegram import Update, ReplyKeyboardMarkup, InlineKeyboardMarkup, KeyboardButton
+from telegram import Update, ReplyKeyboardMarkup, InlineKeyboardMarkup
 from telegram.ext import (
     Application,
     CommandHandler,
@@ -11,6 +11,8 @@ from telegram.ext import (
     filters,
 )
 from dotenv import load_dotenv
+import requests
+from bs4 import BeautifulSoup
 
 from database import query
 from flan_service import flan_service
@@ -55,9 +57,31 @@ async def handle_menu(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         await start(update, ctx)
 
 async def handle_text(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
-    
     msg = update.message.text.strip()
-    step = ctx.user_data.get("step", "chat")
+    lower = msg.lower()
+
+    # captura dinâmica de "contato" via scraping do site
+    if any(kw in lower for kw in ("contato", "telefone", "e-mail")):
+        try:
+            url = "https://www.quixada.ufc.br/fale-conosco/"
+            resp = requests.get(url, timeout=5)
+            resp.raise_for_status()
+
+            soup = BeautifulSoup(resp.text, "html.parser")
+            # seleciona todos os <li> dentro do primeiro <ul>
+            lis = soup.select("ul li")  
+            if not lis:
+                raise ValueError("Nenhum item de contato encontrado")
+
+            # extrai texto de cada <li> e formata
+            lines = [li.get_text(" | ", strip=True) for li in lis]
+            texto = "📞 Contatos UFC Quixadá:\n" + "\n".join(lines)
+
+        except Exception:
+            texto = "❌ Não consegui recuperar os contatos. Tente mais tarde."
+
+        await update.message.reply_text(texto)
+        return
 
     # fluxo de matrícula
     if step == "awaiting_matricula":
@@ -105,11 +129,14 @@ async def handle_text(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     else:
         # 2) fallback Flan-T5
         try:
-            context = "\n\n".join([f"Q: {q['pergunta']}\nA: {q['resposta']}" for q in QA])
-            resposta = flan_service.generate_response(msg, context)
-        except Exception as e:
-            print(f"Erro ao gerar resposta: {e}")
-            resposta = "Desculpe, não consegui processar sua pergunta. Por favor, tente reformular."
+            # 1) Contexto estático + exemplos do JSON
+            system_prompt = STATIC_CONTEXT.strip()
+            examples = "\n\n".join(f"Q: {q['pergunta']}\nA: {q['resposta']}" for q in QA)
+            full_context = f"{system_prompt}\n\n{examples}"
+
+            resposta = flan_service.generate_response(msg, full_context)
+        except Exception:
+            resposta = "Desculpe, não consegui processar sua pergunta."
 
     # Verifica se a resposta está vazia
     if not resposta.strip():
@@ -135,6 +162,14 @@ async def button(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     else:
         await update.callback_query.message.reply_text("Perfeito! 😊")
         await start(update, ctx)
+
+# Fatos “hard‐coded” que o modelo deve usar em qualquer fallback
+STATIC_CONTEXT = """
+Campus UFC Quixadá – Contatos:
+• Coordenação: coordenacao@quixada.ufc.br | (88) 3541-1234
+• Secretaria Acadêmica: sec-academica@quixada.ufc.br | (88) 3541-5678
+• Site oficial: https://quixada.ufc.br
+"""
 
 def main():
     app = Application.builder().token(TOKEN).build()

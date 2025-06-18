@@ -1,3 +1,12 @@
+# Monkey-patch for split_torch_state_dict_into_shards
+import huggingface_hub
+
+if not hasattr(huggingface_hub, "split_torch_state_dict_into_shards"):
+    def split_torch_state_dict_into_shards(state_dict, max_shard_size, post_process_kwargs=None):
+        # fallback trivial: um único “shard” com o estado completo
+        yield state_dict
+    huggingface_hub.split_torch_state_dict_into_shards = split_torch_state_dict_into_shards
+
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import torch
 import logging
@@ -78,17 +87,17 @@ class SafeFlanT5:
                 skip_special_tokens=True
             )
             
-            return response if response.strip() else "Não consegui gerar uma resposta adequada."
+            return response.strip() or "Não consegui gerar uma resposta."
             
         except torch.cuda.OutOfMemoryError:
-            logger.warning("Estouro de memória da GPU - retornando fallback")
-            return "Desculpe, minha capacidade de processamento está limitada no momento."
+            logger.warning("Estouro de memória da GPU - fallback")
+            return "Desculpe, minha capacidade de processamento está limitada."
             
         except Exception as e:
             logger.error(f"Erro na geração: {str(e)}")
             return "Ocorreu um erro ao processar sua pergunta."
 
-# Instância global segura
+# Instância global
 try:
     flan_service = SafeFlanT5()
     if flan_service.model is None:
