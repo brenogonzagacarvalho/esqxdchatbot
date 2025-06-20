@@ -1,9 +1,11 @@
 python-telegram-bot==20.3
-transformers>=4.32.2
-huggingface_hub>=0.16.4
-torch>=2.0.0
-PyMySQL
-python-dotenv
+python-dotenv==1.1.0
+PyMySQL==1.1.1
+requests==2.32.4
+beautifulsoup4==4.12.2
+transformers==4.32.1
+torch
+huggingface-hub==0.16.4
 #py -3.11 -m venv
 #.venv\Scripts\activate
 #pip install -r requirements.txt
