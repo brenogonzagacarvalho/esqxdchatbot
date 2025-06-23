@@ -1,5 +1,42 @@
 [
   {
+    "pergunta": "📅 Calendário Acadêmico",
+    "variacoes": ["Qual o calendário acadêmico?", "Datas das aulas", "Calendário"],
+    "resposta": "Você pode acessar o calendário acadêmico pelo site: https://www.ufc.br/calendario-universitario/2025",
+    "tags": ["calendário", "datas", "aulas"]
+  },
+  {
+    "pergunta": "📝 Como se Matricular",
+    "variacoes": ["Como faço minha matrícula?", "Preciso me matricular", "Matricular disciplinas"],
+    "resposta": "A matrícula é feita pelo SIGAA: https://www.si3.ufc.br/sigaa com suas credenciais.",
+    "tags": ["matricula", "disciplinas", "inscrição"]
+  },
+  {
+    "pergunta": "🔄 Trancamento/Cancelamento",
+    "variacoes": ["Como trancar uma disciplina?", "Quero cancelar minha matrícula", "Trancamento de semestre"],
+    "resposta": "Acesse o SIGAA no menu 'Ensino' > 'Trancamento'. Dúvidas? Fale com a secretaria ou veja em https://es.quixada.ufc.br/documentos.",
+    "tags": ["trancamento", "cancelamento", "disciplinas"]
+  },
+  {
+    "pergunta": "📊 Histórico Escolar",
+    "variacoes": ["Como vejo meu histórico?", "Quero meu histórico", "Histórico de notas"],
+    "resposta": "Seu histórico escolar está disponível no SIGAA em: 'Ensino' > 'Consultar Histórico'.",
+    "tags": ["histórico", "notas", "disciplinas"]
+  },
+  {
+    "pergunta": "Duvidas Frequentes",
+    "variacoes": ["Onde posso tirar dúvidas?", "Onde posso encontrar ajuda?", "Onde posso obter suporte?"],
+    "resposta": "Para tirar dúvidas, acesse o site: https://www.quixada.ufc.br/duvidas-frequentes/",
+    "tags": ["ajuda", "suporte", "duvidas"]
+    
+  },
+  {
+  "pergunta": "Fale com a Coordenação",
+  "variacoes": ["Como falar com a coordenação?", "Quero falar com a coordenação", "Contato da coordenação", "Preciso da coordenação"],
+  "resposta": "Você pode entrar em contato com a coordenação do curso de Engenharia de Software pelo email: es@quixada.ufc.br ou presencialmente na sala da coordenação no campus.",
+  "tags": ["coordenação", "contato", "ajuda"]
+},
+  {
     "intent": "resposta_0",
     "pergunta": "O que é o Estágio Curricular Supervisionado?",
     "resposta": "📚 O Estágio Curricular Supervisionado é uma atividade obrigatória que integra teoria e prática profissional. Desenvolvido em ambientes reais de trabalho, ele: \n\n• Complementa sua formação acadêmica \n• Tem carga horária definida no projeto pedagógico \n• É regulamentado pela UFC \n\n🔍 *Dica:* Consulte o Art. 1º do regulamento no site da coordenação.",
