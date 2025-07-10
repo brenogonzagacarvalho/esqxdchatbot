@@ -19,6 +19,36 @@ load_dotenv()
 
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 
+async def send_long_message(update: Update, message: str, parse_mode: str = 'Markdown'):
+    """Envia mensagem longa dividindo em chunks se necessário"""
+    MAX_MESSAGE_LENGTH = 4000  # Deixa margem de segurança
+    
+    if len(message) <= MAX_MESSAGE_LENGTH:
+        await update.message.reply_text(message, parse_mode=parse_mode)
+        return
+    
+    # Divide a mensagem em chunks
+    chunks = []
+    current_chunk = ""
+    
+    for line in message.split('\n'):
+        if len(current_chunk) + len(line) + 1 <= MAX_MESSAGE_LENGTH:
+            current_chunk += line + '\n'
+        else:
+            if current_chunk:
+                chunks.append(current_chunk.strip())
+            current_chunk = line + '\n'
+    
+    if current_chunk:
+        chunks.append(current_chunk.strip())
+    
+    # Envia cada chunk
+    for i, chunk in enumerate(chunks):
+        if i == 0:
+            await update.message.reply_text(chunk, parse_mode=parse_mode)
+        else:
+            await update.message.reply_text(f"(continuação...)\n\n{chunk}", parse_mode=parse_mode)
+
 # Carrega perguntas e respostas
 with open("public/perguntas_respostas_melhorado.json", encoding="utf-8") as f:
     QA = json.load(f)
@@ -208,7 +238,7 @@ async def handle_free_question(update: Update, context: ContextTypes.DEFAULT_TYP
     # 3. Busca no PPC
     ppc_response = ppc_search.get_formatted_response(question)
     if ppc_response:
-        await update.message.reply_text(ppc_response, parse_mode='Markdown')
+        await send_long_message(update, ppc_response)
         return
 
     # 4. Fallback para FLAN com contexto do PPC
@@ -218,7 +248,7 @@ async def handle_free_question(update: Update, context: ContextTypes.DEFAULT_TYP
         context_text = f"{DEFAULT_CONTEXT}\n\nContexto do PPC:\n{ppc_context}"
         
         resposta = flan_service.generate_response(question, context_text)
-        await update.message.reply_text(resposta, parse_mode='Markdown')
+        await send_long_message(update, resposta)
     except Exception as e:
         print(f"Erro FLAN-T5: {e}")
         await update.message.reply_text(

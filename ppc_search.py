@@ -156,10 +156,13 @@ class PPCSearch:
                     best_paragraph = paragraph
         
         if best_paragraph:
+            # Limita o tamanho do parágrafo
+            if len(best_paragraph) > 1000:
+                best_paragraph = best_paragraph[:1000] + "..."
             return f"**Informação do PPC:**\n\n{best_paragraph.strip()}"
         else:
             # Fallback para o início do chunk
-            return f"**Informação do PPC:**\n\n{chunk_text[:500]}..."
+            return f"**Informação do PPC:**\n\n{chunk_text[:800]}..."
 
 # Instância global
 ppc_search = PPCSearch()

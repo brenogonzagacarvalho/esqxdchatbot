@@ -34,6 +34,27 @@ def advanced_similarity(query, item):
     
     return score
 
+def split_long_message(message, max_length=4000):
+    """Divide mensagem longa em chunks se necessário"""
+    if len(message) <= max_length:
+        return [message]
+    
+    chunks = []
+    current_chunk = ""
+    
+    for line in message.split('\n'):
+        if len(current_chunk) + len(line) + 1 <= max_length:
+            current_chunk += line + '\n'
+        else:
+            if current_chunk:
+                chunks.append(current_chunk.strip())
+            current_chunk = line + '\n'
+    
+    if current_chunk:
+        chunks.append(current_chunk.strip())
+    
+    return chunks
+
 def handle_message(message_text, user_id):
     qa_data = load_qa_data()
     
@@ -87,11 +108,16 @@ class handler(BaseHTTPRequestHandler):
                 bot_token = os.environ.get('TELEGRAM_TOKEN')
                 if bot_token:
                     url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-                    data = {
-                        "chat_id": chat_id,
-                        "text": response_text
-                    }
-                    requests.post(url, json=data)
+                    
+                    # Divide mensagem longa se necessário
+                    chunks = split_long_message(response_text)
+                    
+                    for i, chunk in enumerate(chunks):
+                        data = {
+                            "chat_id": chat_id,
+                            "text": f"(continuação...)\n\n{chunk}" if i > 0 else chunk
+                        }
+                        requests.post(url, json=data)
             
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
