@@ -1,8 +1,7 @@
 from http.server import BaseHTTPRequestHandler
 import json
 import os
-import asyncio
-from telegram import Bot, Update
+import requests
 import sys
 sys.path.append('..')
 from vercel_storage import vercel_storage
@@ -35,7 +34,7 @@ def advanced_similarity(query, item):
     
     return score
 
-async def handle_message(message_text, user_id):
+def handle_message(message_text, user_id):
     qa_data = load_qa_data()
     
     best_match = None
@@ -54,10 +53,10 @@ async def handle_message(message_text, user_id):
     
     # Salva a conversa no Vercel Blob Storage
     try:
-        await vercel_storage.store_conversation(user_id, message_text, response)
+        vercel_storage.store_conversation(user_id, message_text, response)
         
         # Salva analytics de uso
-        await vercel_storage.store_analytics("message_received", {
+        vercel_storage.store_analytics("message_received", {
             "user_id": user_id,
             "message_length": len(message_text),
             "response_type": "qa_match" if best_match else "fallback",
@@ -81,22 +80,18 @@ class handler(BaseHTTPRequestHandler):
                 message_text = update_data['message']['text']
                 user_id = update_data['message']['from']['id']
                 
-                # Gera resposta (função async)
-                async def process_message():
-                    response_text = await handle_message(message_text, user_id)
-                    
-                    # Envia resposta via Telegram Bot API
-                    bot_token = os.environ.get('TELEGRAM_TOKEN')
-                    if bot_token:
-                        bot = Bot(token=bot_token)
-                        await bot.send_message(chat_id=chat_id, text=response_text)
-                    
-                    return response_text
+                # Gera resposta
+                response_text = handle_message(message_text, user_id)
                 
-                # Executa função async
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-                loop.run_until_complete(process_message())
+                # Envia resposta via Telegram Bot API
+                bot_token = os.environ.get('TELEGRAM_TOKEN')
+                if bot_token:
+                    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                    data = {
+                        "chat_id": chat_id,
+                        "text": response_text
+                    }
+                    requests.post(url, json=data)
             
             self.send_response(200)
             self.send_header('Content-type', 'application/json')

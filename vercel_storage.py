@@ -61,11 +61,11 @@ class VercelBlobStorage:
             print(f"Erro ao recuperar dados do usuário {user_id}: {e}")
             return None
     
-    async def store_conversation(self, user_id: int, message: str, response: str) -> bool:
+    def store_conversation(self, user_id: int, message: str, response: str) -> bool:
         """Armazena conversa do usuário"""
         try:
             # Tenta recuperar conversas existentes
-            conversations = await self.get_conversations(user_id) or []
+            conversations = self.get_conversations(user_id) or []
             
             # Adiciona nova conversa
             new_conversation = {
@@ -87,18 +87,18 @@ class VercelBlobStorage:
                 "last_updated": datetime.now().isoformat()
             }, ensure_ascii=False, indent=2)
             
-            response = await self._upload_blob(filename, json_data)
-            return response.status == 200
+            response = self._upload_blob(filename, json_data)
+            return response.status_code == 200
             
         except Exception as e:
             print(f"Erro ao armazenar conversa do usuário {user_id}: {e}")
             return False
     
-    async def get_conversations(self, user_id: int) -> Optional[List[Dict[str, Any]]]:
+    def get_conversations(self, user_id: int) -> Optional[List[Dict[str, Any]]]:
         """Recupera conversas do usuário"""
         try:
             filename = f"conversations_{user_id}.json"
-            data = await self._download_blob(filename)
+            data = self._download_blob(filename)
             
             if data:
                 parsed_data = json.loads(data)
@@ -109,7 +109,7 @@ class VercelBlobStorage:
             print(f"Erro ao recuperar conversas do usuário {user_id}: {e}")
             return []
     
-    async def store_analytics(self, event_type: str, data: Dict[str, Any]) -> bool:
+    def store_analytics(self, event_type: str, data: Dict[str, Any]) -> bool:
         """Armazena dados de analytics"""
         try:
             # Gera ID único para o evento
@@ -123,17 +123,15 @@ class VercelBlobStorage:
             }
             
             json_data = json.dumps(analytics_data, ensure_ascii=False, indent=2)
-            response = await self._upload_blob(filename, json_data)
-            return response.status == 200
+            response = self._upload_blob(filename, json_data)
+            return response.status_code == 200
             
         except Exception as e:
             print(f"Erro ao armazenar analytics: {e}")
             return False
     
-    async def _upload_blob(self, filename: str, content: str) -> requests.Response:
+    def _upload_blob(self, filename: str, content: str) -> requests.Response:
         """Upload de conteúdo para o Vercel Blob"""
-        import aiohttp
-        
         url = f"https://blob.vercel-storage.com/put"
         
         headers = {
@@ -142,31 +140,27 @@ class VercelBlobStorage:
             "Content-Type": "application/json"
         }
         
-        async with aiohttp.ClientSession() as session:
-            async with session.put(url, data=content.encode('utf-8'), headers=headers) as response:
-                return response
+        response = requests.put(url, data=content.encode('utf-8'), headers=headers)
+        return response
     
-    async def _download_blob(self, filename: str) -> Optional[str]:
+    def _download_blob(self, filename: str) -> Optional[str]:
         """Download de conteúdo do Vercel Blob"""
-        import aiohttp
-        
         try:
             # Primeiro, lista os blobs para encontrar a URL
             list_url = f"https://blob.vercel-storage.com/list"
             headers = {"Authorization": f"Bearer {self.blob_token}"}
             
-            async with aiohttp.ClientSession() as session:
-                async with session.get(list_url, headers=headers) as response:
-                    if response.status == 200:
-                        blobs = await response.json()
-                        
-                        # Procura pelo arquivo
-                        for blob in blobs.get("blobs", []):
-                            if blob["pathname"] == filename:
-                                # Faz download do conteúdo
-                                async with session.get(blob["url"]) as download_response:
-                                    if download_response.status == 200:
-                                        return await download_response.text()
+            response = requests.get(list_url, headers=headers)
+            if response.status_code == 200:
+                blobs = response.json()
+                
+                # Procura pelo arquivo
+                for blob in blobs.get("blobs", []):
+                    if blob["pathname"] == filename:
+                        # Faz download do conteúdo
+                        download_response = requests.get(blob["url"])
+                        if download_response.status_code == 200:
+                            return download_response.text
             
             return None
             

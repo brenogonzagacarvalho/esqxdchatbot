@@ -1,6 +1,5 @@
 from http.server import BaseHTTPRequestHandler
 import json
-import asyncio
 import sys
 sys.path.append('..')
 from vercel_storage import vercel_storage
@@ -20,14 +19,7 @@ class handler(BaseHTTPRequestHandler):
                 return
             
             # Busca conversas do usuário
-            async def get_user_history():
-                conversations = await vercel_storage.get_conversations(user_id)
-                return conversations or []
-            
-            # Executa função async
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-            conversations = loop.run_until_complete(get_user_history())
+            conversations = vercel_storage.get_conversations(user_id) or []
             
             # Retorna histórico
             self.send_response(200)
@@ -63,15 +55,8 @@ class handler(BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps({"error": "user_id required"}).encode())
                 return
             
-            # Limpa histórico do usuário
-            async def clear_user_history():
-                # Armazena lista vazia para limpar histórico
-                return await vercel_storage.store_conversation(user_id, "", "")
-            
-            # Executa função async
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-            success = loop.run_until_complete(clear_user_history())
+            # Limpa histórico do usuário (armazena lista vazia)
+            success = vercel_storage.store_conversation(user_id, "", "")
             
             if success:
                 self.send_response(200)
