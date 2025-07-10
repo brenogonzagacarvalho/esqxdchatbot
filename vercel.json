@@ -20,11 +20,7 @@
       "dest": "/api/history.py"
     }
   ],
-  "functions": {
-    "api/webhook.py": {
-      "maxDuration": 30
-    }
-  },
+
   "env": {
     "TELEGRAM_TOKEN": "@telegram_token",
     "HF_API_TOKEN": "@hf_api_token",
