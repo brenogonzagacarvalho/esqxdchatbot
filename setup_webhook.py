@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-WEBHOOK_URL = "https://esqxdchatbot-4zq5gbsyx-brenogonzagacarvalhos-projects.vercel.app/api/webhook"
+WEBHOOK_URL = "https://esqxdchatbot-g7zme4isu-brenogonzagacarvalhos-projects.vercel.app/api/webhook"
 
 if not TELEGRAM_TOKEN:
     print("TELEGRAM_TOKEN não encontrado no .env")
