@@ -27,7 +27,7 @@ class VercelBlobStorage:
         url = f"{self.base_url}{endpoint}"
         return requests.request(method, url, headers=headers, **kwargs)
     
-    async def store_user_data(self, user_id: int, data: Dict[str, Any]) -> bool:
+    def store_user_data(self, user_id: int, data: Dict[str, Any]) -> bool:
         """Armazena dados do usuário"""
         try:
             filename = f"user_data_{user_id}.json"
@@ -40,18 +40,18 @@ class VercelBlobStorage:
             json_data = json.dumps(data, ensure_ascii=False, indent=2)
             
             # Faz upload para o Vercel Blob
-            response = await self._upload_blob(filename, json_data)
-            return response.status == 200
+            response = self._upload_blob(filename, json_data)
+            return response.status_code == 200
             
         except Exception as e:
             print(f"Erro ao armazenar dados do usuário {user_id}: {e}")
             return False
     
-    async def get_user_data(self, user_id: int) -> Optional[Dict[str, Any]]:
+    def get_user_data(self, user_id: int) -> Optional[Dict[str, Any]]:
         """Recupera dados do usuário"""
         try:
             filename = f"user_data_{user_id}.json"
-            data = await self._download_blob(filename)
+            data = self._download_blob(filename)
             
             if data:
                 return json.loads(data)

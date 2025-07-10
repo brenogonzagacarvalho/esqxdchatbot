@@ -28,13 +28,16 @@ MAIN_MENU = [
     ["📚 Informações sobre Estágio"],
     ["🎓 Informações sobre Matrícula"],    
     ["📝 Registrar Dados Acadêmicos"],
+    ["📞 Fale com a Coordenação"],
+    ["🏆 Atividades Complementares"],
 ]
 
 ESTAGIO_MENU = [
-    ["📋 Requisitos para Estágio"],
-    ["📄 Documentos Necessários"],
-    ["⏰ Prazos e Cronograma"],
-    ["🏢 Como Encontrar Empresas"],
+    ["💼 Estágio Curricular Supervisionado"],
+    ["🏢 Empresas Conveniadas para Estágio"],
+    ["🏛️ Núcleo de Práticas em Informática (NPI)"],
+    ["🚀 Iniciativa Empreendedora (IE)"],
+    ["🔬 Projetos de Pesquisa como Estágio"],
     ["🔙 Voltar ao Menu Principal"]
 ]
 
@@ -43,6 +46,15 @@ MATRICULA_MENU = [
     ["📝 Como se Matricular"],
     ["🔄 Trancamento/Cancelamento"],
     ["📊 Histórico Escolar"],
+    ["🔙 Voltar ao Menu Principal"]
+]
+
+CURSO_MENU = [
+    ["📝 Trabalho de Conclusão de Curso (TCC)"],
+    ["🌍 Curricularização da Extensão"],
+    ["📖 Metodologias de Ensino"],
+    ["⚖️ Avaliação do Curso"],
+    ["👥 Gestão Acadêmica"],
     ["🔙 Voltar ao Menu Principal"]
 ]
 
@@ -86,7 +98,7 @@ def advanced_similarity(query: str, item: dict) -> float:
 
 # 🏁 Start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await vercel_storage.store_analytics("bot_start", {
+    vercel_storage.store_analytics("bot_start", {
         "user_id": update.effective_user.id,
         "username": update.effective_user.username,
         "first_name": update.effective_user.first_name
@@ -121,6 +133,12 @@ async def handle_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         context.user_data["step"] = "cadastro_nome"
         await update.message.reply_text("Informe seu nome completo:", reply_markup=ReplyKeyboardRemove())
 
+    elif msg == "📞 Fale com a Coordenação":
+        await handle_specific_question(update, context, "📞 Fale com a Coordenação")
+
+    elif msg == "🏆 Atividades Complementares":
+        await handle_specific_question(update, context, "🏆 Atividades Complementares")
+
     elif msg == "🔙 Voltar ao Menu Principal":
         await start(update, context)
 
@@ -130,7 +148,7 @@ async def handle_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # 📝 Cadastro guiado
 async def handle_cadastro(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
-    user_data = await vercel_storage.get_user_data(user.id) or {}
+    user_data = vercel_storage.get_user_data(user.id) or {}
 
     text = (
         "📝 **Seus Dados Acadêmicos**\n\n"
@@ -146,7 +164,19 @@ async def handle_cadastro(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     await update.message.reply_text(text, parse_mode="Markdown")
+
+# 🎯 Pergunta específica do menu
+async def handle_specific_question(update: Update, context: ContextTypes.DEFAULT_TYPE, question: str):
+    """Handle questions triggered by menu options"""
+    # Procura pela pergunta específica no JSON
+    for item in QA:
+        if item["pergunta"] == question:
+            await update.message.reply_text(item["resposta"], parse_mode='Markdown')
+            return
     
+    # Fallback para busca livre se não encontrar
+    await handle_free_question(update, context)
+
 # ❓ Perguntas livres
 async def handle_free_question(update: Update, context: ContextTypes.DEFAULT_TYPE):
     question = update.message.text
@@ -202,22 +232,58 @@ async def handle_free_question(update: Update, context: ContextTypes.DEFAULT_TYP
         )
 # 🚀 Main
 def main():
-    print("🤖 Bot iniciado...")
+    print("Bot iniciado...")
     app = Application.builder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, route_message))
 
-    print("✅ Bot rodando!")
+    print("Bot rodando!")
     app.run_polling(allowed_updates=Update.ALL_TYPES)
 
 # 🔀 Roteador
 async def route_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     step = context.user_data.get("step", "main_menu")
-    if step.startswith("cadastro"):
+    msg = update.message.text
+    
+    # Handle submenu navigation
+    if step == "estagio_menu":
+        await handle_estagio_menu(update, context)
+    elif step == "matricula_menu":
+        await handle_matricula_menu(update, context)
+    elif step == "curso_menu":
+        await handle_curso_menu(update, context)
+    elif step.startswith("cadastro"):
         await handle_cadastro(update, context)
     else:
         await handle_menu(update, context)
+
+# 📚 Menu Estágio
+async def handle_estagio_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    msg = update.message.text
+    
+    if msg == "🔙 Voltar ao Menu Principal":
+        await start(update, context)
+    else:
+        await handle_specific_question(update, context, msg)
+
+# 🎓 Menu Matrícula
+async def handle_matricula_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    msg = update.message.text
+    
+    if msg == "🔙 Voltar ao Menu Principal":
+        await start(update, context)
+    else:
+        await handle_specific_question(update, context, msg)
+
+# 📖 Menu Curso
+async def handle_curso_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    msg = update.message.text
+    
+    if msg == "🔙 Voltar ao Menu Principal":
+        await start(update, context)
+    else:
+        await handle_specific_question(update, context, msg)
 
 if __name__ == "__main__":
     main()
