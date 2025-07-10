@@ -1,0 +1,304 @@
+[
+  {
+    "pergunta": "📅 Calendário Acadêmico",
+    "variacoes": [
+      "Qual o calendário acadêmico?", 
+      "Datas das aulas", 
+      "Calendário", 
+      "Quando começam as aulas?", 
+      "Período letivo",
+      "Cronograma do semestre"
+    ],
+    "resposta": "📅 **Calendário Acadêmico 2025:**\n\n• **Site oficial:** https://www.ufc.br/calendario-universitario/2025\n• **Período letivo:** Definido pela PROGRAD\n• **Matrícula:** Consulte prazos no SIGAA\n\n🔔 *Acompanhe:* Comunicados da coordenação por e-mail.",
+    "tags": ["calendário", "datas", "aulas", "semestre"]
+  },
+  {
+    "pergunta": "🔄 Trancamento/Cancelamento",
+    "variacoes": [
+      "Como trancar uma disciplina?", 
+      "Quero cancelar minha matrícula", 
+      "Trancamento de semestre",
+      "Cancelamento de matrícula",
+      "Trancar disciplina",
+      "Desistir da disciplina",
+      "Sair do curso"
+    ],
+    "resposta": "🔄 **Trancamento de Disciplinas:**\n\n• **Via SIGAA:** Menu 'Ensino' > 'Trancamento'\n• **Prazo:** Conforme Calendário Universitário\n• **Documentos:** Justificativa quando necessário\n\n📋 **Trancamento Total:**\n• Solicitação formal à coordenação\n• Documentação comprobatória\n\n🌐 *Mais informações:* https://es.quixada.ufc.br/documentos",
+    "tags": ["trancamento", "cancelamento", "disciplinas", "matrícula"]
+  },
+  {
+    "pergunta": "📊 Histórico Escolar",
+    "variacoes": [
+      "Como vejo meu histórico?", 
+      "Quero meu histórico", 
+      "Histórico de notas",
+      "Consultar notas",
+      "Ver minhas notas",
+      "Boletim acadêmico",
+      "Relatório de notas"
+    ],
+    "resposta": "📊 **Histórico Escolar:**\n\n• **SIGAA:** Menu 'Ensino' > 'Consultar Histórico'\n• **Emitir:** Histórico oficial para documentação\n• **IRA:** Calculado automaticamente\n\n📈 **Dicas:**\n• Acompanhe regularmente seu desempenho\n• Verifique pré-requisitos para próximas disciplinas",
+    "tags": ["histórico", "notas", "disciplinas", "IRA"]
+  },
+  {
+    "pergunta": "📞 Fale com a Coordenação",
+    "variacoes": [
+      "Como falar com a coordenação?", 
+      "Quero falar com a coordenação", 
+      "Contato da coordenação", 
+      "Preciso da coordenação",
+      "Email da coordenação",
+      "Telefone da coordenação",
+      "Atendimento presencial"
+    ],
+    "resposta": "📞 **Contato da Coordenação:**\n\n• **Email:** es@quixada.ufc.br\n• **Localização:** Sala da coordenação no campus\n• **Horário:** Seg-Sex, 8h-17h\n• **Coordenador:** Prof. Jeferson Kenedy Morais Vieira\n\n🏢 **Atendimento:**\n• Agendamento recomendado\n• Dúvidas acadêmicas e administrativas\n• Orientações sobre o curso",
+    "tags": ["coordenação", "contato", "ajuda", "atendimento"]
+  },
+  {
+    "pergunta": "💼 Estágio Curricular Supervisionado",
+    "variacoes": [
+      "O que é o Estágio Curricular Supervisionado?",
+      "Como funciona o estágio obrigatório?",
+      "Estágio supervisionado",
+      "Estágio curricular",
+      "Informações sobre estágio",
+      "Regulamento de estágio"
+    ],
+    "resposta": "💼 **Estágio Curricular Supervisionado:**\n\n• **Obrigatório:** Sim, para conclusão do curso\n• **Carga horária:** 300 horas mínimas\n• **Quando:** A partir do 7º semestre\n• **Disciplinas:** Estágio I (160h) e II (160h)\n\n🎯 **Objetivos:**\n• Aplicar conhecimentos teóricos na prática\n• Desenvolver competências profissionais\n• Integrar universidade e mercado de trabalho\n\n📋 **Modalidades:**\n• Estágio em empresas (externo)\n• Estágio no NPI (interno)\n• Iniciativa Empreendedora\n• Projetos de pesquisa\n\n*Fonte: PPC do Curso (Seção 10)*",
+    "tags": ["estágio", "curricular", "supervisionado", "obrigatório"]
+  },
+  {
+    "pergunta": "🏢 Empresas Conveniadas para Estágio",
+    "variacoes": [
+      "Quais empresas têm convênio para estágio?",
+      "Lista de empresas parceiras",
+      "Onde posso fazer estágio?",
+      "Empresas conveniadas",
+      "Parceiros para estágio",
+      "Convênios de estágio"
+    ],
+    "resposta": "🏢 **Empresas Conveniadas:**\n\n• **Lista atualizada:** Portal de Estágios UFC\n• **Consulta:** Setor de Estágios do campus\n• **Variedade:** Empresas locais, nacionais e multinacionais\n\n💡 **Dicas:**\n• Verifique regularmente novas oportunidades\n• Empresas podem firmar convênio durante o processo\n• Consulte a coordenação sobre empresas específicas\n\n📞 **Contato:** Setor de Estágios UFC Quixadá\n\n*Fonte: PPC do Curso (Seção 10.1)*",
+    "tags": ["empresas", "convênios", "estágio", "parceiras"]
+  },
+  {
+    "pergunta": "🏛️ Núcleo de Práticas em Informática (NPI)",
+    "variacoes": [
+      "O que é o NPI?",
+      "Como estagiar no NPI?",
+      "Núcleo de Práticas",
+      "Estágio interno",
+      "Projetos no NPI",
+      "Oportunidades no Núcleo"
+    ],
+    "resposta": "🏛️ **Núcleo de Práticas em Informática (NPI):**\n\n• **Finalidade:** Aplicar conhecimentos em projetos reais\n• **Modalidade:** Estágio interno na UFC\n• **Projetos:** Desenvolvimento de software para comunidade\n• **Supervisão:** Professores orientadores\n\n💼 **Vantagens:**\n• Experiência prática em ambiente acadêmico\n• Desenvolvimento de projetos sociais\n• Flexibilidade de horários\n• Mentoria próxima\n\n📍 **Localização:** Campus UFC Quixadá\n🕒 **Funcionamento:** Seg-Sex, 8h-17h\n\n*Fonte: PPC do Curso (Seção 10.2)*",
+    "tags": ["NPI", "núcleo", "práticas", "estágio", "interno"]
+  },
+  {
+    "pergunta": "🚀 Iniciativa Empreendedora (IE)",
+    "variacoes": [
+      "O que é Iniciativa Empreendedora?",
+      "Como validar projeto próprio?",
+      "Empreendedorismo como estágio",
+      "IE como estágio",
+      "Startup como estágio",
+      "Projeto próprio"
+    ],
+    "resposta": "🚀 **Iniciativa Empreendedora (IE):**\n\n• **Conceito:** Desenvolver projeto empreendedor próprio\n• **Validação:** Como estágio curricular supervisionado\n• **Requisitos:** Plano de negócios detalhado\n• **Orientação:** Professor orientador designado\n\n🎯 **Objetivos:**\n• Fomentar o empreendedorismo\n• Desenvolver soluções inovadoras\n• Aplicar conhecimentos do curso\n• Criar valor para a sociedade\n\n📋 **Processo:**\n• Elaboração do projeto\n• Aprovação pela coordenação\n• Acompanhamento regular\n• Relatório final\n\n*Fonte: PPC do Curso (Seção 10.3)*",
+    "tags": ["empreendedorismo", "IE", "startup", "projeto", "inovação"]
+  },
+  {
+    "pergunta": "🔬 Projetos de Pesquisa como Estágio",
+    "variacoes": [
+      "Posso fazer estágio em pesquisa?",
+      "Pesquisa como estágio",
+      "Iniciação científica vale estágio?",
+      "Projeto de pesquisa",
+      "Estágio acadêmico",
+      "IC como estágio"
+    ],
+    "resposta": "🔬 **Projetos de Pesquisa como Estágio:**\n\n• **Modalidade:** Estágio em projetos de pesquisa\n• **Requisitos:** Projeto aprovado, orientador definido\n• **Área:** Relacionada à Engenharia de Software\n• **Carga horária:** Equivalente ao estágio tradicional\n\n🎓 **Vantagens:**\n• Experiência em pesquisa acadêmica\n• Possibilidade de publicações\n• Preparação para pós-graduação\n• Conhecimento aprofundado em área específica\n\n📝 **Processo:**\n• Identificar projeto de interesse\n• Contatar professor orientador\n• Elaborar plano de trabalho\n• Aprovação pela coordenação\n\n*Fonte: PPC do Curso (Seção 10.4)*",
+    "tags": ["pesquisa", "IC", "estágio", "acadêmico", "cientifica"]
+  },
+  {
+    "pergunta": "📝 Trabalho de Conclusão de Curso (TCC)",
+    "variacoes": [
+      "Como funciona o TCC?",
+      "Trabalho de conclusão",
+      "TCC obrigatório",
+      "Projeto final",
+      "Monografia",
+      "TCC I e II"
+    ],
+    "resposta": "📝 **Trabalho de Conclusão de Curso (TCC):**\n\n• **Obrigatório:** Sim, para conclusão do curso\n• **Disciplinas:** TCC I (2º créditos) e TCC II (2º créditos)\n• **Quando:** Últimos semestres (7º e 8º)\n• **Formato:** Monografia ou projeto prático\n\n🎯 **Objetivos:**\n• Demonstrar competências adquiridas\n• Aplicar conhecimentos em problema real\n• Desenvolver capacidade de pesquisa\n• Contribuir para área de Engenharia de Software\n\n📋 **Processo:**\n• **TCC I:** Elaboração da proposta\n• **TCC II:** Desenvolvimento e defesa\n• **Orientação:** Professor orientador\n• **Avaliação:** Banca examinadora\n\n*Fonte: PPC do Curso (Seção 11)*",
+    "tags": ["TCC", "trabalho", "conclusão", "monografia", "defesa"]
+  },
+  {
+    "pergunta": "🏆 Atividades Complementares",
+    "variacoes": [
+      "O que são atividades complementares?",
+      "Como validar atividades complementares?",
+      "Horas complementares",
+      "AC obrigatórias",
+      "Atividades extracurriculares",
+      "Certificados para AC"
+    ],
+    "resposta": "🏆 **Atividades Complementares:**\n\n• **Carga horária:** 200 horas obrigatórias\n• **Validação:** Via SIGAA com documentação\n• **Prazo:** Durante todo o curso\n\n📚 **Categorias aceitas:**\n• Cursos e treinamentos\n• Eventos científicos e técnicos\n• Projetos de pesquisa e extensão\n• Monitoria e estágios não obrigatórios\n• Publicações e apresentações\n• Atividades de representação estudantil\n\n💡 **Dicas:**\n• Diversifique as atividades\n• Mantenha documentação organizada\n• Registre regularmente no SIGAA\n• Consulte regulamento para limites por categoria\n\n*Fonte: PPC do Curso (Seção 12)*",
+    "tags": ["atividades", "complementares", "AC", "horas", "validação"]
+  },
+  {
+    "pergunta": "🌍 Curricularização da Extensão",
+    "variacoes": [
+      "O que é curricularização da extensão?",
+      "Extensão obrigatória",
+      "Como participar da extensão?",
+      "Projetos de extensão",
+      "Atividades extensionistas",
+      "Extensão no currículo"
+    ],
+    "resposta": "🌍 **Curricularização da Extensão:**\n\n• **Obrigatória:** 10% da carga horária total (320 horas)\n• **Integração:** Ensino, pesquisa e extensão\n• **Objetivo:** Impacto na transformação social\n\n🎯 **Atividades incluídas:**\n• Projetos Integrados I, II e III\n• Disciplinas com foco extensionista\n• Projetos comunitários\n• Desenvolvimento de soluções sociais\n\n💡 **Benefícios:**\n• Experiência prática com comunidade\n• Desenvolvimento de responsabilidade social\n• Aplicação de conhecimentos em contexto real\n• Formação cidadã e crítica\n\n📋 **Implementação:** Resolução UFC nº 28/2017\n\n*Fonte: PPC do Curso (Seção 13)*",
+    "tags": ["extensão", "curricularização", "comunidade", "social", "projetos"]
+  },
+  {
+    "pergunta": "📖 Metodologias de Ensino",
+    "variacoes": [
+      "Como são as aulas do curso?",
+      "Metodologias ativas",
+      "Métodos de ensino",
+      "Práticas pedagógicas",
+      "Aulas práticas",
+      "Aprendizagem ativa"
+    ],
+    "resposta": "📖 **Metodologias de Ensino:**\n\n🔍 **Metodologias Ativas:**\n• Aprendizagem baseada em problemas (PBL)\n• Sala de aula invertida\n• Aprendizagem baseada em projetos\n• Seminários e debates\n• Estudos de caso\n\n💻 **Recursos Tecnológicos:**\n• Plataforma Moodle\n• Sistema NADIA para exercícios\n• Ferramentas de desenvolvimento\n• Laboratórios especializados\n\n🎯 **Integração Teoria-Prática:**\n• Projetos integradores\n• Disciplinas práticas\n• Trabalhos em equipe\n• Conexão com mercado\n\n*Fonte: PPC do Curso (Seção 14)*",
+    "tags": ["metodologias", "ensino", "ativas", "práticas", "aprendizagem"]
+  },
+  {
+    "pergunta": "⚖️ Avaliação do Curso",
+    "variacoes": [
+      "Como é avaliado o curso?",
+      "Avaliação institucional",
+      "Feedback dos alunos",
+      "Qualidade do curso",
+      "Avaliação externa",
+      "SINAES"
+    ],
+    "resposta": "⚖️ **Avaliação do Curso:**\n\n📊 **Avaliação Interna:**\n• Autoavaliação anual\n• Pesquisa com discentes e docentes\n• Análise de indicadores acadêmicos\n• Acompanhamento pelo NDE\n\n🔍 **Avaliação Externa:**\n• SINAES (Sistema Nacional de Avaliação)\n• Avaliação in loco pelo MEC\n• ENADE (Exame Nacional)\n• Conceito Preliminar de Curso (CPC)\n\n📈 **Melhorias Contínuas:**\n• Análise de resultados\n• Planos de ação\n• Reformulações curriculares\n• Investimento em infraestrutura\n\n*Fonte: PPC do Curso (Seção 16)*",
+    "tags": ["avaliação", "qualidade", "SINAES", "ENADE", "institucional"]
+  },
+  {
+    "pergunta": "👥 Gestão Acadêmica",
+    "variacoes": [
+      "Como funciona a gestão do curso?",
+      "Quem coordena o curso?",
+      "Colegiado do curso",
+      "NDE",
+      "Núcleo Docente Estruturante",
+      "Organização administrativa"
+    ],
+    "resposta": "👥 **Gestão Acadêmica:**\n\n🎓 **Coordenação:**\n• **Coordenador:** Prof. Jeferson Kenedy Morais Vieira\n• **Vice-coordenadora:** Profa. Rainara Maia Carvalho\n• **Mandato:** 2 anos\n\n🏛️ **Colegiado:**\n• Representantes docentes e discentes\n• Decisões acadêmicas e administrativas\n• Reuniões periódicas\n\n🔬 **Núcleo Docente Estruturante (NDE):**\n• Acompanhamento do projeto pedagógico\n• Reformulações curriculares\n• Qualidade do curso\n\n📋 **Apoio ao Discente:**\n• Orientação acadêmica\n• Programas de assistência\n• Nivelamento e monitoria\n\n*Fonte: PPC do Curso (Seção 17)*",
+    "tags": ["gestão", "coordenação", "colegiado", "NDE", "administrativa"]
+  },
+  {
+    "pergunta": "🏗️ Infraestrutura do Curso",
+    "variacoes": [
+      "Como é a infraestrutura?",
+      "Laboratórios disponíveis",
+      "Salas de aula",
+      "Biblioteca",
+      "Recursos do campus",
+      "Estrutura física"
+    ],
+    "resposta": "🏗️ **Infraestrutura do Curso:**\n\n🖥️ **Laboratórios:**\n• Laboratórios de informática especializados\n• Softwares de desenvolvimento atualizados\n• Acesso à internet de alta velocidade\n• Equipamentos modernos\n\n📚 **Biblioteca:**\n• Acervo específico da área\n• Acesso a bases de dados\n• Ambiente de estudos\n• Recursos digitais\n\n🏫 **Salas de Aula:**\n• Equipadas com projetores\n• Climatizadas\n• Capacidade adequada\n• Acessibilidade\n\n☁️ **Estruturas Adicionais:**\n• Computação em nuvem\n• Hospedagem de projetos\n• Espaços de trabalho colaborativo\n• Ambiente integrado ao Parque de Monólitos\n\n*Fonte: PPC do Curso (Seção 18)*",
+    "tags": ["infraestrutura", "laboratórios", "biblioteca", "salas", "recursos"]
+  },
+  {
+    "pergunta": "📈 Índice de Rendimento Acadêmico (IRA)",
+    "variacoes": [
+      "Como é calculado o IRA?",
+      "O que é IRA?",
+      "Índice de rendimento",
+      "Como melhorar meu IRA?",
+      "IRA baixo",
+      "Cálculo de notas"
+    ],
+    "resposta": "📈 **Índice de Rendimento Acadêmico (IRA):**\n\n📊 **Cálculo:**\n• Média ponderada das notas\n• Considera carga horária das disciplinas\n• Penalidades para reprovações por falta\n• Atualizado a cada semestre\n\n🎯 **Importância:**\n• Critério para bolsas e programas\n• Mudança de curso\n• Participação em projetos\n• Intercâmbios acadêmicos\n\n💡 **Dicas para melhorar:**\n• Reduzir número de disciplinas\n• Buscar monitoria\n• Participar de grupos de estudo\n• Evitar reprovações por falta\n• Consultar coordenação para orientação\n\n📋 **Consulta:** Disponível no SIGAA\n\n*Fonte: Regulamento Acadêmico UFC*",
+    "tags": ["IRA", "rendimento", "notas", "desempenho", "acadêmico"]
+  },
+  {
+    "pergunta": "🎓 Perfil do Egresso",
+    "variacoes": [
+      "O que vou saber fazer quando me formar?",
+      "Perfil do formado",
+      "Competências do egresso",
+      "Habilidades desenvolvidas",
+      "O que o curso ensina?",
+      "Formação profissional"
+    ],
+    "resposta": "🎓 **Perfil do Egresso:**\n\n💼 **Competências Técnicas:**\n• Desenvolvimento de software de qualidade\n• Análise e projeto de sistemas\n• Gerenciamento de projetos\n• Teste e validação de software\n• Arquitetura de sistemas\n\n🧠 **Competências Transversais:**\n• Pensamento crítico e analítico\n• Comunicação eficaz\n• Trabalho em equipe\n• Liderança e gestão\n• Empreendedorismo\n\n🌍 **Formação Cidadã:**\n• Responsabilidade social\n• Ética profissional\n• Visão sistêmica\n• Sustentabilidade\n• Inclusão digital\n\n🎯 **Capacidades:**\n• Resolver problemas complexos\n• Adaptar-se a novas tecnologias\n• Pesquisar e inovar\n• Atuar em equipes multidisciplinares\n\n*Fonte: PPC do Curso (Seção 7)*",
+    "tags": ["egresso", "perfil", "competências", "habilidades", "formação"]
+  },
+  {
+    "pergunta": "🌐 Áreas de Atuação Profissional",
+    "variacoes": [
+      "Onde posso trabalhar?",
+      "Áreas de atuação",
+      "Mercado de trabalho",
+      "Oportunidades profissionais",
+      "Cargos disponíveis",
+      "Onde engenheiro de software trabalha?"
+    ],
+    "resposta": "🌐 **Áreas de Atuação Profissional:**\n\n💻 **Desenvolvimento:**\n• Desenvolvedor de software\n• Analista de sistemas\n• Programador full-stack\n• Desenvolvedor mobile\n• Especialista em web\n\n🏗️ **Arquitetura e Design:**\n• Arquiteto de software\n• Designer de sistemas\n• Especialista em UX/UI\n• Arquiteto de soluções\n\n📊 **Gestão e Qualidade:**\n• Gerente de projetos\n• Analista de qualidade\n• Engenheiro de testes\n• Scrum Master\n• Product Owner\n\n🔬 **Pesquisa e Inovação:**\n• Pesquisador\n• Professor universitário\n• Consultor técnico\n• Empreendedor tech\n\n🏢 **Setores:**\n• Empresas de tecnologia\n• Bancos e fintechs\n• Indústria 4.0\n• Startups\n• Setor público\n\n*Fonte: PPC do Curso (Seção 8)*",
+    "tags": ["atuação", "profissional", "mercado", "trabalho", "carreira"]
+  },
+  {
+    "pergunta": "📚 Carga Horária e Duração",
+    "variacoes": [
+      "Quantas horas tem o curso?",
+      "Duração do curso",
+      "Quanto tempo para se formar?",
+      "Carga horária total",
+      "Semestres do curso",
+      "Tempo mínimo"
+    ],
+    "resposta": "📚 **Carga Horária e Duração:**\n\n⏱️ **Carga Horária Total:** 3.200 horas\n\n📅 **Duração:**\n• **Mínima:** 4 anos (8 semestres)\n• **Máxima:** 6 anos (12 semestres)\n• **Média:** 4,5 anos\n\n📊 **Distribuição:**\n• Disciplinas obrigatórias: 2.592 horas\n• Disciplinas optativas: 288 horas\n• Atividades complementares: 200 horas\n• Estágio supervisionado: 300 horas\n\n🎓 **Modalidade:** Bacharelado presencial\n📍 **Oferta:** Anual (50 vagas)\n🕐 **Turno:** Integral (manhã e tarde)\n\n*Fonte: PPC do Curso (Seção 4)*",
+    "tags": ["carga", "horária", "duração", "tempo", "semestres"]
+  },
+  {
+    "pergunta": "🔐 Acesso e Suporte Técnico",
+    "variacoes": [
+      "Problemas com SIGAA",
+      "Não consigo acessar o sistema",
+      "Esqueci minha senha",
+      "Suporte técnico",
+      "Ajuda com sistemas",
+      "Login não funciona"
+    ],
+    "resposta": "🔐 **Acesso e Suporte Técnico:**\n\n💻 **SIGAA:**\n• **Site:** https://si3.ufc.br/sigaa/\n• **Problemas de acesso:** Suporte TI UFC\n• **Recuperação de senha:** Opção disponível no login\n• **Primeiro acesso:** Use CPF e senha padrão\n\n📱 **Suporte:**\n• **Email:** suporte@ufc.br\n• **Telefone:** Central de atendimento\n• **Presencial:** Setor de TI do campus\n\n🔧 **Problemas Comuns:**\n• Navegador desatualizado\n• Cache do navegador\n• Bloqueadores de pop-up\n• Conexão instável\n\n💡 **Dicas:**\n• Use navegadores atualizados\n• Limpe cache regularmente\n• Mantenha dados atualizados\n• Acesse em horários alternativos",
+    "tags": ["SIGAA", "suporte", "técnico", "acesso", "senha"]
+  },
+  {
+    "pergunta": "🏥 Apoio Psicopedagógico",
+    "variacoes": [
+      "Preciso de ajuda psicológica",
+      "Apoio emocional",
+      "Dificuldades nos estudos",
+      "Ansiedade acadêmica",
+      "Suporte psicopedagógico",
+      "Orientação acadêmica"
+    ],
+    "resposta": "🏥 **Apoio Psicopedagógico:**\n\n🤝 **Serviços Disponíveis:**\n• Atendimento psicológico individual\n• Orientação pedagógica\n• Grupos de apoio\n• Oficinas de técnicas de estudo\n• Acompanhamento acadêmico\n\n📞 **Como Acessar:**\n• **PRAE:** Pró-Reitoria de Assuntos Estudantis\n• **Agendamento:** Presencial ou telefônico\n• **Atendimento:** Gratuito para estudantes\n• **Confidencialidade:** Sigilo profissional\n\n🎯 **Áreas de Apoio:**\n• Ansiedade e estresse\n• Dificuldades de aprendizagem\n• Orientação vocacional\n• Relacionamentos interpessoais\n• Questões familiares\n\n📍 **Localização:** Campus UFC Quixadá\n🕐 **Horário:** Consultar agenda disponível\n\n*Fonte: PRAE UFC*",
+    "tags": ["apoio", "psicológico", "pedagógico", "PRAE", "emocional"]
+  },
+  {
+    "pergunta": "💰 Assistência Estudantil",
+    "variacoes": [
+      "Auxílios disponíveis",
+      "Bolsas para estudantes",
+      "Ajuda financeira",
+      "Assistência social",
+      "Programas de auxílio",
+      "Benefícios estudantis"
+    ],
+    "resposta": "💰 **Assistência Estudantil:**\n\n🏠 **Auxílio Moradia:**\n• Valor mensal para custeio de moradia\n• Critérios socioeconômicos\n• Pode ser acumulado com outras bolsas\n\n🍽️ **Restaurante Universitário:**\n• Refeições subsidiadas\n• Café da manhã, almoço e jantar\n• Preços acessíveis\n\n📚 **Auxílio Acadêmico:**\n• Material didático\n• Transporte\n• Participação em eventos\n\n👶 **Auxílio Creche:**\n• Para estudantes com filhos\n• Faixa etária: 6 meses a 4 anos\n• Comprovação de guarda\n\n🆘 **Auxílio Emergencial:**\n• Situações excepcionais\n• Até 4 vezes por ano\n• Documentação comprobatória\n\n📋 **Como Solicitar:**\n• Inscrição via edital\n• Análise socioeconômica\n• Documentação completa\n• Acompanhamento pela PRAE\n\n*Fonte: PRAE UFC*",
+    "tags": ["assistência", "auxílio", "bolsas", "PRAE", "estudantil"]
+  }
+]
