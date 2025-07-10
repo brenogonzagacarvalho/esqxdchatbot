@@ -12,7 +12,7 @@ from telegram.ext import (
 from dotenv import load_dotenv
 
 from vercel_storage import vercel_storage
-from flan_service import flan_service
+from flan_service import flan_service, DEFAULT_CONTEXT
 
 load_dotenv()
 
@@ -58,7 +58,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     })
 
     await update.message.reply_text(
-        f"🎓 Olá {update.effective_user.first_name}! Bem-vindo ao ChatBot da UFC Quixadá.\n\n"
+        f"🎓 Olá {update.effective_user.first_name}! Bem-vindo ao ChatBot da Coordenação de Engenharia de Software.\n\n"
         "Escolha uma opção abaixo ou digite sua pergunta.",
         reply_markup=ReplyKeyboardMarkup(MAIN_MENU, resize_keyboard=True)
     )
@@ -111,65 +111,55 @@ async def handle_cadastro(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     await update.message.reply_text(text, parse_mode="Markdown")
-
+    
 # ❓ Perguntas livres
 async def handle_free_question(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    question = update.message.text.lower()
-
-    best_match = None
-    best_score = 0
-
-    for qa_item in QA:
-        # Lista de possíveis perguntas (principal + variações)
-        perguntas = [qa_item["pergunta"].lower()]
-        if "variacoes" in qa_item:
-            perguntas.extend([v.lower() for v in qa_item["variacoes"]])
-
-        # Verificar similaridade com pergunta e variações
-        for pergunta in perguntas:
-            score = similarity(question, pergunta)
-            if score > best_score:
-                best_score = score
-                best_match = qa_item
-
-    # 🔍 Busca por similaridade na pergunta
-    if best_match and best_score >= 0.7:
+    question = update.message.text
+    
+    # 1. Busca no JSON local
+    best_match = max(
+        QA,
+        key=lambda x: max(
+            similarity(question, p) 
+            for p in [x["pergunta"]] + x.get("variacoes", [])
+        )
+    )
+    best_score = max(
+        similarity(question, p) 
+        for p in [best_match["pergunta"]] + best_match.get("variacoes", [])
+    )
+    
+    if best_score >= 0.65:
         response = best_match["resposta"]
         if "tags" in best_match:
-            response += f"\n\n🏷️ *Tags:* #{', #'.join(best_match['tags'])}"
+            response += f"\n\n🏷️ Tags: #{', #'.join(best_match['tags'])}"
         await update.message.reply_text(response, parse_mode='Markdown')
         return
 
-    # 🔍 Busca por tags se a pergunta contém uma palavra-chave
+    # 2. Busca por tags
     for qa_item in QA:
-        if "tags" in qa_item:
-            for tag in qa_item["tags"]:
-                if tag.lower() in question:
-                    response = qa_item["resposta"]
-                    response += f"\n\n🏷️ *Tags:* #{', #'.join(qa_item['tags'])}"
-                    await update.message.reply_text(response, parse_mode='Markdown')
-                    return
-
-    # 🤖 Fallback para modelo Flan-T5
-    try:
-        resposta = flan_service.generate_response(question, context="Chatbot do curso de Engenharia de Software da UFC Quixadá.")
-
-        if resposta and resposta.strip():
-            await update.message.reply_text(resposta, parse_mode='Markdown')
+        if any(tag.lower() in question.lower() for tag in qa_item.get("tags", [])):
+            response = qa_item["resposta"]
+            if "tags" in qa_item:
+                response += f"\n\n🏷️ Tags: #{', #'.join(qa_item['tags'])}"
+            await update.message.reply_text(response, parse_mode='Markdown')
             return
+
+    # 3. Fallback para FLAN com contexto específico
+    try:
+        # Contexto dinâmico baseado no menu atual
+        current_menu = context.user_data.get("current_menu", "")
+        context_text = f"Tópico atual: {current_menu}\n{DEFAULT_CONTEXT}"
+        
+        resposta = flan_service.generate_response(question, context_text)
+        await update.message.reply_text(resposta, parse_mode='Markdown')
     except Exception as e:
-        print(f"Erro com Flan-T5: {e}")
-
-    # ⚠️ Resposta padrão caso tudo falhe
-    await update.message.reply_text(
-        "❌ Não encontrei uma resposta específica.\n\n"
-        "Você pode tentar:\n"
-        "• Reformular sua pergunta\n"
-        "• Escolher um tópico no menu\n"
-        "• Acessar o site oficial: https://es.quixada.ufc.br",
-        parse_mode='Markdown'
-    )
-
+        print(f"Erro FLAN-T5: {e}")
+        await update.message.reply_text(
+            "Não consegui encontrar uma resposta precisa. "
+            "Recomendo verificar no site oficial: https://es.quixada.ufc.br",
+            parse_mode='Markdown'
+        )
 # 🚀 Main
 def main():
     print("🤖 Bot iniciado...")

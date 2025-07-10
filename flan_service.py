@@ -1,5 +1,13 @@
 # Monkey-patch for split_torch_state_dict_into_shards
 import huggingface_hub
+DEFAULT_CONTEXT = """
+Você é um assistente virtual do curso de Engenharia de Software da UFC Quixadá.
+Informações relevantes:
+- Carga horária mínima por semestre: 12 créditos (180h)
+- Estágio obrigatório: 300 horas
+- Disciplinas por semestre: 4-6
+- Período de matrícula: Janeiro e Julho
+"""
 
 if not hasattr(huggingface_hub, "split_torch_state_dict_into_shards"):
     def split_torch_state_dict_into_shards(state_dict, max_shard_size, post_process_kwargs=None):
@@ -52,51 +60,43 @@ class SafeFlanT5:
                 pass
         return "cpu"
 
-    def generate_response(self, question: str, context: str) -> str:
-        """Gera resposta com proteções extras para hardware limitado"""
+    def generate_response(self, question: str, context: str = None) -> str:
         if not self.model:
-            return "O serviço de respostas está temporariamente indisponível."
+            return "Serviço temporariamente indisponível."
         
         try:
-            # Limites conservadores para seu hardware
-            safe_question = question[:150]  # Máximo 150 caracteres
-            safe_context = context[:1000]   # Máximo 1000 caracteres
+            # Contexto aprimorado
+            safe_context = DEFAULT_CONTEXT + (context if context else "")
             
-            input_text = f"question: {safe_question}\ncontext: {safe_context}"
+            input_text = f"question: {question[:150]}\ncontext: {safe_context[:1000]}"
             
             inputs = self.tokenizer(
                 input_text,
                 return_tensors="pt",
-                max_length=384,  # Menor que o padrão (512)
-                truncation=True,
-                padding=True
+                max_length=384,
+                truncation=True
             ).to(self.device)
             
-            # Configurações ultra-conservadoras
             with torch.no_grad():
                 outputs = self.model.generate(
                     **inputs,
-                    max_new_tokens=80,  # Respostas mais curtas
-                    num_beams=2,        # Menos consumo de memória
-                    early_stopping=True,
-                    temperature=0.8
+                    max_new_tokens=100,
+                    num_beams=3,
+                    temperature=0.7,
+                    do_sample=True
                 )
             
-            response = self.tokenizer.decode(
-                outputs[0],
-                skip_special_tokens=True
-            )
+            response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
             
-            return response.strip() or "Não consegui gerar uma resposta."
-            
-        except torch.cuda.OutOfMemoryError:
-            logger.warning("Estouro de memória da GPU - fallback")
-            return "Desculpe, minha capacidade de processamento está limitada."
-            
+            # Pós-processamento para respostas mais naturais
+            if response.lower().startswith("não sei") or len(response) < 5:
+                return "Não encontrei informações precisas sobre isso no meu banco de dados."
+                
+            return response.strip()
+        
         except Exception as e:
-            logger.error(f"Erro na geração: {str(e)}")
-            return "Ocorreu um erro ao processar sua pergunta."
-
+            print(f"Erro na geração: {e}")
+            return "Houve um erro ao processar sua pergunta."
 # Instância global
 try:
     flan_service = SafeFlanT5()
