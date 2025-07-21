@@ -6,19 +6,23 @@
 
 ### Desenvolvimento e Teste
 ```bash
-# Executar bot localmente
-python bot.py
+# Executar bot localmente (nova estrutura)
+python main.py
+
+# Ou executar bot diretamente
+python src/core/bot.py
 
 # Processar PDF do PPC
-python pdf_processor.py
+python src/services/document/pdf_processor.py
 
 # Testar componentes individuais
-python -c "from ppc_search import ppc_search; print(ppc_search.search_ppc('estágio'))"
-python -c "from flan_service import flan_service; print(flan_service.generate_response('teste', 'contexto'))"
+python -c "from src.services.search.ppc_search import ppc_search; print(ppc_search.search_ppc('estágio'))"
+python -c "from src.services.ai.flan_service import flan_service; print(flan_service.generate_response('teste', 'contexto'))"
 
 # Executar testes
-python test_bot.py
-python test_filters.py
+pytest tests/
+python -m pytest tests/unit/
+python -m pytest tests/integration/
 ```
 
 ### Deploy e Produção
@@ -43,26 +47,46 @@ npm install
 find . -name "*.py" -type f
 
 # Verificar chunks do PPC
-python -c "import json; data=json.load(open('public/ppc_chunks.json')); print(f'Chunks: {len(data[\"chunks\"])}')"
+python -c "import json; data=json.load(open('data/qa/ppc_chunks.json')); print(f'Chunks: {len(data[\"chunks\"])}')"
 
 # Testar busca local
-python -c "import json; qa=json.load(open('public/perguntas_respostas_melhorado.json')); print(f'Q&A items: {len(qa[\"qa_items\"])}')"
+python -c "import json; qa=json.load(open('data/qa/perguntas_respostas_melhorado.json')); print(f'Q&A items: {len(qa[\"qa_items\"])}')"
 ```
 
-## 🏗️ Estrutura do Projeto
+## 🏗️ Estrutura do Projeto - Clean Architecture
 
-### Arquivos Principais
-- `bot.py` - Núcleo do bot com handlers principais
-- `flan_service.py` - Serviço de IA com modelo FLAN-T5
-- `ppc_search.py` - Motor de busca no PPC
-- `pdf_processor.py` - Processamento de documentos PDF
-- `vercel_storage.py` - Interface com Vercel Blob Storage
+### Nova Estrutura Organizada
+```
+📁 esqxdchatbot/
+├── 🏠 main.py                     # Ponto de entrada principal
+├── ⚙️ config/                     # Configurações centralizadas
+├── 🧠 src/                        # Código fonte principal
+│   ├── 🎯 core/                   # Núcleo da aplicação
+│   │   └── bot.py                # Bot principal
+│   ├── 🔧 services/               # Camada de serviços
+│   │   ├── 🤖 ai/                 # flan_service.py
+│   │   ├── 🔍 search/             # ppc_search.py
+│   │   ├── 💾 storage/            # vercel_storage.py
+│   │   └── 📄 document/           # pdf_processor.py
+│   ├── 🎮 handlers/               # Manipuladores de eventos
+│   ├── 📊 models/                 # Modelos de dados
+│   └── 🛠️ utils/                  # Utilitários
+├── 📊 data/                       # Dados da aplicação
+│   ├── 📝 qa/                     # JSON Q&A, chunks do PPC
+│   ├── 📁 raw/                    # PPC-ES-2023.pdf
+│   └── ⚙️ processed/              # Dados processados
+├── 🧪 tests/                      # Testes organizados
+├── 📚 docs/                       # Documentação
+├── 🔧 scripts/                    # Scripts utilitários
+└── 🌐 api/                        # Endpoints Vercel
+```
 
-### Diretórios
-- `api/` - Endpoints para Vercel (webhook.py, history.py)
-- `public/` - Dados públicos (JSON Q&A, chunks do PPC)
-- `examples/` - Documentação e exemplos de uso
-- `.venv/` - Ambiente virtual Python
+### Arquivos Principais por Camada
+- **Core**: `src/core/bot.py` - Núcleo do bot
+- **AI Service**: `src/services/ai/flan_service.py` - Modelo FLAN-T5
+- **Search Service**: `src/services/search/ppc_search.py` - Motor de busca
+- **Document Service**: `src/services/document/pdf_processor.py` - Processamento PDF
+- **Storage Service**: `src/services/storage/vercel_storage.py` - Armazenamento
 
 ### Configuração
 - `requirements.txt` - Dependências Python
