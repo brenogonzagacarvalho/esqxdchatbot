@@ -51,7 +51,9 @@ async def send_long_message(update: Update, message: str, parse_mode: str = 'Mar
 
 # Carrega perguntas e respostas
 with open("public/perguntas_respostas_melhorado.json", encoding="utf-8") as f:
-    QA = json.load(f)
+    DATA = json.load(f)
+    QA = DATA["qa_items"]
+    AMBIGUITY_CONFIG = DATA["ambiguity_detection"]
 
 # Menus
 MAIN_MENU = [
@@ -207,9 +209,64 @@ async def handle_specific_question(update: Update, context: ContextTypes.DEFAULT
     # Fallback para busca livre se não encontrar
     await handle_free_question(update, context)
 
+# 🔍 Detecção de perguntas ambíguas
+def is_ambiguous_question(question: str) -> bool:
+    """Detecta se uma pergunta é muito ambígua ou genérica"""
+    question_lower = question.lower()
+    
+    # Carrega configurações do JSON
+    ambiguous_keywords = AMBIGUITY_CONFIG["keywords"]
+    generic_terms = AMBIGUITY_CONFIG["generic_terms"]
+    
+    # Conta palavras ambíguas
+    ambiguous_count = sum(1 for keyword in ambiguous_keywords if keyword in question_lower)
+    
+    # Verifica se tem termos genéricos sem especificação
+    has_generic = any(term in question_lower for term in generic_terms)
+    
+    # Pergunta muito curta (menos de 20 caracteres)
+    is_too_short = len(question.strip()) < 20
+    
+    # Considera ambígua se tem muitas palavras ambíguas OU é muito genérica
+    return (ambiguous_count >= 2) or (has_generic and ambiguous_count >= 1) or is_too_short
+
+# 💬 Gerar pedidos de esclarecimento
+def generate_clarification_request(question: str) -> str:
+    """Gera um pedido de esclarecimento específico baseado na pergunta"""
+    question_lower = question.lower()
+    
+    # Carrega mapeamento do JSON
+    clarification_map = AMBIGUITY_CONFIG["clarification_map"]
+    
+    # Encontra o termo mais relevante
+    relevant_clarifications = []
+    for term, clarifications in clarification_map.items():
+        if term in question_lower:
+            relevant_clarifications.extend(clarifications)
+    
+    # Se não encontrou termos específicos, usa esclarecimento genérico
+    if not relevant_clarifications:
+        relevant_clarifications = AMBIGUITY_CONFIG["default_clarifications"]
+    
+    clarification_text = "\n".join(relevant_clarifications[:5])  # Limita a 5 opções
+    
+    return (
+        f"🤔 Sua pergunta precisa de mais detalhes para eu te ajudar melhor.\n\n"
+        f"**Você está perguntando sobre:**\n"
+        f"{clarification_text}\n\n"
+        f"💡 **Dica:** Seja mais específico em sua pergunta para obter uma resposta mais precisa.\n"
+        f"📞 **Ou contate:** es@quixada.ufc.br"
+    )
+
 # ❓ Perguntas livres
 async def handle_free_question(update: Update, context: ContextTypes.DEFAULT_TYPE):
     question = update.message.text
+    
+    # 0. Verifica se a pergunta é muito ambígua
+    if is_ambiguous_question(question):
+        clarification = generate_clarification_request(question)
+        await update.message.reply_text(clarification, parse_mode='Markdown')
+        return
     
     # 1. Busca avançada no JSON local
     scored_items = []
@@ -241,31 +298,177 @@ async def handle_free_question(update: Update, context: ContextTypes.DEFAULT_TYP
         await send_long_message(update, ppc_response)
         return
 
-    # 4. Fallback para FLAN com contexto do PPC
+    # 4. Verificação final antes do fallback
+    if len(question.strip()) < 10:
+        await update.message.reply_text(
+            "🤔 Sua pergunta está muito curta.\n\n"
+            "💡 **Tente ser mais específico:**\n"
+            "• Qual é exatamente sua dúvida?\n"
+            "• Sobre qual assunto você precisa de ajuda?\n\n"
+            "📞 **Ou contate:** es@quixada.ufc.br",
+            parse_mode='Markdown'
+        )
+        return
+
+    # 5. Fallback controlado (apenas para perguntas bem estruturadas)
     try:
         # Contexto dinâmico baseado no PPC
         ppc_context = ppc_search.get_context_for_flan(question)
-        context_text = f"{DEFAULT_CONTEXT}\n\nContexto do PPC:\n{ppc_context}"
         
-        resposta = flan_service.generate_response(question, context_text)
-        await send_long_message(update, resposta)
+        # Só usa FLAN se encontrou contexto relevante no PPC
+        if ppc_context and len(ppc_context.strip()) > 50:
+            context_text = f"{DEFAULT_CONTEXT}\n\nContexto do PPC:\n{ppc_context}"
+            resposta = flan_service.generate_response(question, context_text)
+            await send_long_message(update, resposta)
+        else:
+            # Sem contexto suficiente, não tenta responder
+            await update.message.reply_text(
+                "😔 Não encontrei informações específicas sobre sua pergunta.\n\n"
+                "💡 **Sugestões:**\n"
+                "• Tente reformular com palavras-chave mais específicas\n"
+                "• Use o menu principal para navegar por tópicos\n"
+                "• Consulte: https://es.quixada.ufc.br\n"
+                "• Fale com a coordenação: es@quixada.ufc.br",
+                parse_mode='Markdown'
+            )
     except Exception as e:
         print(f"Erro FLAN-T5: {e}")
         await update.message.reply_text(
-            "😔 Não consegui encontrar uma resposta precisa para sua pergunta.\n\n"
+            "😔 Não consegui processar sua pergunta no momento.\n\n"
             "💡 **Sugestões:**\n"
             "• Tente reformular sua pergunta\n"
-            "• Use palavras-chave mais específicas\n"
+            "• Use o menu principal para navegar\n"
             "• Consulte: https://es.quixada.ufc.br\n"
             "• Fale com a coordenação: es@quixada.ufc.br",
             parse_mode='Markdown'
         )
+
+# 🎵 Handler para áudio
+async def handle_audio(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Responde quando usuário envia áudio"""
+    await update.message.reply_text(
+        "🎵 **Áudio recebido!**\n\n"
+        "Ainda não consigo processar mensagens de áudio, mas estou aprendendo! 🤖\n\n"
+        "💡 **Por enquanto, você pode:**\n"
+        "• Escrever sua pergunta em texto\n"
+        "• Descrever o que você gostaria de saber\n"
+        "• Usar o menu principal para navegar\n\n"
+        "📞 **Urgente?** Contate: es@quixada.ufc.br",
+        parse_mode='Markdown'
+    )
+
+# 📷 Handler para imagens
+async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Responde quando usuário envia imagem"""
+    await update.message.reply_text(
+        "📷 **Imagem recebida!**\n\n"
+        "Ainda não consigo analisar imagens, mas estou evoluindo! 🤖\n\n"
+        "💡 **Por enquanto, você pode:**\n"
+        "• Descrever o conteúdo da imagem em texto\n"
+        "• Fazer sua pergunta por escrito\n"
+        "• Usar o menu principal para navegar\n\n"
+        "📞 **Precisa de ajuda?** Contate: es@quixada.ufc.br",
+        parse_mode='Markdown'
+    )
+
+# 📹 Handler para vídeos
+async def handle_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Responde quando usuário envia vídeo"""
+    await update.message.reply_text(
+        "📹 **Vídeo recebido!**\n\n"
+        "Ainda não consigo processar vídeos, mas estou me desenvolvendo! 🤖\n\n"
+        "💡 **Por enquanto, você pode:**\n"
+        "• Descrever o conteúdo do vídeo em texto\n"
+        "• Fazer sua pergunta por escrito\n"
+        "• Usar o menu principal para informações\n\n"
+        "📞 **Precisa de ajuda?** Contate: es@quixada.ufc.br",
+        parse_mode='Markdown'
+    )
+
+# 📄 Handler para documentos
+async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Responde quando usuário envia documento"""
+    file_name = update.message.document.file_name if update.message.document.file_name else "documento"
+    
+    await update.message.reply_text(
+        f"📄 **Documento '{file_name}' recebido!**\n\n"
+        "Ainda não consigo analisar documentos, mas estou aprendendo! 🤖\n\n"
+        "💡 **Por enquanto, você pode:**\n"
+        "• Copiar e colar o texto do documento\n"
+        "• Resumir o conteúdo em sua pergunta\n"
+        "• Usar o menu principal para navegar\n\n"
+        "📞 **Documento oficial?** Envie para: es@quixada.ufc.br",
+        parse_mode='Markdown'
+    )
+
+# 🎤 Handler para notas de voz
+async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Responde quando usuário envia nota de voz"""
+    await update.message.reply_text(
+        "🎤 **Nota de voz recebida!**\n\n"
+        "Ainda não consigo ouvir notas de voz, mas estou me aperfeiçoando! 🤖\n\n"
+        "💡 **Por enquanto, você pode:**\n"
+        "• Escrever sua pergunta em texto\n"
+        "• Usar palavras-chave específicas\n"
+        "• Navegar pelo menu principal\n\n"
+        "📞 **Urgente?** Contate: es@quixada.ufc.br",
+        parse_mode='Markdown'
+    )
+
+# 📍 Handler para localização
+async def handle_location(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Responde quando usuário envia localização"""
+    await update.message.reply_text(
+        "📍 **Localização recebida!**\n\n"
+        "Obrigado por compartilhar! Ainda não processo localizações, mas estou evoluindo! 🤖\n\n"
+        "🏫 **Campus UFC Quixadá:**\n"
+        "• Endereço: Av. José de Freitas Queiroz, 5003\n"
+        "• Bairro: Cedro, Quixadá - CE\n"
+        "• CEP: 63902-580\n\n"
+        "💡 **Precisa de informações?** Use o menu principal ou escreva sua pergunta.",
+        parse_mode='Markdown'
+    )
+
+# 🎮 Handler para outros tipos de mídia
+async def handle_other_media(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handler genérico para outros tipos de mídia"""
+    media_type = "mídia"
+    
+    if update.message.sticker:
+        media_type = "sticker"
+    elif update.message.animation:
+        media_type = "GIF"
+    elif update.message.video_note:
+        media_type = "vídeo circular"
+    
+    await update.message.reply_text(
+        f"📱 **{media_type.title()} recebido!**\n\n"
+        "Ainda não consigo processar esse tipo de conteúdo, mas estou aprendendo! 🤖\n\n"
+        "💡 **Por enquanto, você pode:**\n"
+        "• Escrever sua pergunta em texto\n"
+        "• Usar o menu principal para navegar\n"
+        "• Ser específico em suas dúvidas\n\n"
+        "📞 **Precisa de ajuda?** Contate: es@quixada.ufc.br",
+        parse_mode='Markdown'
+    )
+
 # 🚀 Main
 def main():
     print("Bot iniciado...")
     app = Application.builder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
+    
+    # 📱 Handlers para diferentes tipos de mídia
+    app.add_handler(MessageHandler(filters.AUDIO, handle_audio))
+    app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
+    app.add_handler(MessageHandler(filters.VIDEO, handle_video))
+    app.add_handler(MessageHandler(filters.Document.ALL, handle_document))
+    app.add_handler(MessageHandler(filters.VOICE, handle_voice))
+    app.add_handler(MessageHandler(filters.LOCATION, handle_location))
+    app.add_handler(MessageHandler(filters.Sticker.ALL | filters.ANIMATION | filters.VIDEO_NOTE, handle_other_media))
+    
+    # 💬 Handler para mensagens de texto (deve vir por último)
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, route_message))
 
     print("Bot rodando!")

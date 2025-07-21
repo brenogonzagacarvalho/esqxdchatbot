@@ -1,5 +1,61 @@
-[
-  {
+{
+  "ambiguity_detection": {
+    "keywords": [
+      "pendências", "problemas", "dificuldades", "questões",
+      "como fazer", "como resolver", "preciso saber", "gostaria de saber",
+      "me ajude", "ajuda", "dúvida", "dúvidas", "informação", "informações"
+    ],
+    "generic_terms": [
+      "disciplina", "matéria", "curso", "nota", "prova",
+      "trabalho", "projeto", "atividade", "tarefa"
+    ],
+    "clarification_map": {
+      "pendências": [
+        "• Pendências de matrícula?",
+        "• Pendências de notas?", 
+        "• Pendências de disciplinas reprovadas?",
+        "• Pendências de documentos?",
+        "• Pendências de estágio?"
+      ],
+      "disciplina": [
+        "• Matrícula em disciplinas?",
+        "• Trancamento de disciplinas?",
+        "• Reprovação em disciplinas?",
+        "• Pré-requisitos de disciplinas?",
+        "• Horários de disciplinas?"
+      ],
+      "matrícula": [
+        "• Primeira matrícula no curso?",
+        "• Matrícula em disciplinas?",
+        "• Renovação de matrícula?",
+        "• Problemas com matrícula?",
+        "• Calendário de matrícula?"
+      ],
+      "nota": [
+        "• Consulta de notas?",
+        "• Revisão de notas?",
+        "• Média para aprovação?",
+        "• Notas de atividades complementares?",
+        "• Sistema de avaliação?"
+      ],
+      "estágio": [
+        "• Estágio obrigatório?",
+        "• Empresas para estágio?",
+        "• Documentação de estágio?",
+        "• Supervisor de estágio?",
+        "• Carga horária de estágio?"
+      ]
+    },
+    "default_clarifications": [
+      "• Sobre matrícula e disciplinas?",
+      "• Sobre estágio curricular?",
+      "• Sobre atividades complementares?",
+      "• Sobre TCC?",
+      "• Sobre contato com coordenação?"
+    ]
+  },
+  "qa_items": [
+    {
     "pergunta": "📅 Calendário Acadêmico",
     "variacoes": [
       "Qual o calendário acadêmico?", 
@@ -301,4 +357,5 @@
     "resposta": "💰 **Assistência Estudantil:**\n\n🏠 **Auxílio Moradia:**\n• Valor mensal para custeio de moradia\n• Critérios socioeconômicos\n• Pode ser acumulado com outras bolsas\n\n🍽️ **Restaurante Universitário:**\n• Refeições subsidiadas\n• Café da manhã, almoço e jantar\n• Preços acessíveis\n\n📚 **Auxílio Acadêmico:**\n• Material didático\n• Transporte\n• Participação em eventos\n\n👶 **Auxílio Creche:**\n• Para estudantes com filhos\n• Faixa etária: 6 meses a 4 anos\n• Comprovação de guarda\n\n🆘 **Auxílio Emergencial:**\n• Situações excepcionais\n• Até 4 vezes por ano\n• Documentação comprobatória\n\n📋 **Como Solicitar:**\n• Inscrição via edital\n• Análise socioeconômica\n• Documentação completa\n• Acompanhamento pela PRAE\n\n*Fonte: PRAE UFC*",
     "tags": ["assistência", "auxílio", "bolsas", "PRAE", "estudantil"]
   }
-]
+  ]
+}
