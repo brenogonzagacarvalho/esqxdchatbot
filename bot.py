@@ -1,3 +1,26 @@
+"""
+Chatbot Educacional para Engenharia de Software - UFC Quixadá
+
+Este módulo implementa o núcleo do chatbot desenvolvido como parte do TCC,
+fornecendo interface conversacional via Telegram para consultas acadêmicas.
+
+Funcionalidades principais:
+- Interface com API do Telegram
+- Sistema de menus hierárquicos para navegação
+- Processamento inteligente de perguntas em linguagem natural
+- Integração com base de conhecimento do PPC-ES 2023
+- Analytics e armazenamento de dados de uso
+
+Arquitetura:
+- Message Router: Roteia mensagens entre handlers apropriados
+- Question Processor: Processa perguntas usando múltiplas estratégias
+- Menu System: Sistema hierárquico de navegação por tópicos
+- Media Handlers: Tratamento de diferentes tipos de mídia
+
+Autor: Desenvolvimento para TCC - Engenharia de Software UFC Quixadá
+Data: 2025
+"""
+
 import json
 import os
 from difflib import SequenceMatcher
@@ -95,7 +118,29 @@ def similarity(a: str, b: str) -> float:
     return SequenceMatcher(None, a.lower(), b.lower()).ratio()
 
 def advanced_similarity(query: str, item: dict) -> float:
-    """Calcula similaridade avançada considerando múltiplos fatores"""
+    """
+    Calcula similaridade avançada considerando múltiplos fatores.
+    
+    Algoritmo multi-fator que combina diferentes métricas de similaridade
+    para melhorar a precisão do matching entre perguntas do usuário e
+    itens da base de conhecimento.
+    
+    Args:
+        query (str): Pergunta do usuário
+        item (dict): Item da base Q&A com estrutura:
+                    - pergunta: pergunta principal
+                    - variacoes: lista de variações da pergunta
+                    - tags: lista de palavras-chave
+    
+    Returns:
+        float: Score de similaridade entre 0.0 e 1.0
+        
+    Fatores considerados:
+        - Similaridade textual com pergunta principal (60%)
+        - Similaridade com variações
+        - Matching de tags (20%)
+        - Matching de palavras-chave específicas (20%)
+    """
     query_lower = query.lower()
     
     # Similaridade com a pergunta principal

@@ -1,51 +1,306 @@
-# Logs
-logs
-npm-debug.log
+# =========================================
+# .gitignore - Chatbot Educacional UFC Quixadá
+# Projeto TCC - Engenharia de Software
+# =========================================
+
+# =============================================================================
+# PYTHON - Cache, Build, Virtual Environment
+# =============================================================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# PyCharm
+.idea/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# =============================================================================
+# NODE.JS - Dependencies, Cache, Build
+# =============================================================================
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# NPM cache
+.npm
+
+# Yarn cache
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Build output
+dist/
+out/
+build/
+
+# Coverage directory used by tools like istanbul
+coverage/
+.lcov
+
+# =============================================================================
+# ENVIRONMENT & CONFIGURATION
+# =============================================================================
+
+# Environment variables (CRÍTICO - Nunca commitar)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Configurações locais
+config.local.json
+settings.local.py
+
+# =============================================================================
+# VERCEL - Deploy e Cache
+# =============================================================================
+
+# Vercel build cache
+.vercel
+
+# Vercel environment variables
+.vercel/.env*
+
+# =============================================================================
+# LOGS E DEBUG
+# =============================================================================
+
+# Logs gerais
+logs/
+*.log
+npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
-# Diagnostic reports
+# Debug files
+debug.log
+*.debug
+
+# Crash reports
 report.[0-9].[0-9].[0-9].[0-9].json
 
-# Dependency directories
-node_modules
-jspm_packages
+# =============================================================================
+# TELEGRAM & IA - Dados Sensíveis
+# =============================================================================
 
-# Coverage directories
-coverage
-.lcov
-.nyc_output
+# Tokens e credenciais (NUNCA COMMITAR)
+telegram_token.txt
+*.token
+*.credentials
 
-# Build output
-dist
-out
+# Dados de usuários e analytics privados
+user_data/
+private_analytics/
+sensitive_data/
 
-# Environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+# Modelos de IA baixados localmente
+models/
+*.bin
+*.safetensors
+pytorch_model.bin
 
-# Cache directories
-.cache
-.parcel-cache
+# Cache do Hugging Face
+.cache/huggingface/
 
-# Next.js build output
-.next
+# =============================================================================
+# ARQUIVOS DE SISTEMA
+# =============================================================================
 
-# Nuxt.js build/generate output
-.nuxt
-dist
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
 
-# Docusaurus cache and generated files
-.docusaurus
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
 
-# Serverless directories
-.serverless
-.vercel
-.venv
-__pycache__
-.pyc
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# EDITORES E IDEs
+# =============================================================================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =============================================================================
+# TEMPORÁRIOS E BACKUP
+# =============================================================================
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+*.backup
+*.orig
+
+# Arquivos de teste
+test_output/
+temp_files/
+scratch/
+
+# =============================================================================
+# DADOS ESPECÍFICOS DO PROJETO
+# =============================================================================
+
+# Dados de desenvolvimento (não necessários para produção)
+test_conversations/
+local_analytics/
+dev_cache/
+
+# Arquivos de exemplo com dados reais
+example_with_real_data/
+
+# Cache local do processamento de PDF
+pdf_cache/
+chunks_cache/
+
+# =============================================================================
+# DOCUMENTOS CONFIDENCIAIS
+# =============================================================================
+
+# Documentos que podem conter informações sensíveis
+*.confidential.*
+private_docs/
+internal_notes.md
+
+# =============================================================================
+# NOTA IMPORTANTE PARA TCC
+# =============================================================================
+# Este .gitignore foi configurado para proteger:
+# 1. Tokens e credenciais sensíveis
+# 2. Dados pessoais de usuários
+# 3. Cache e arquivos temporários
+# 4. Configurações locais de desenvolvimento
+# 
+# Sempre verifique antes de fazer commit que nenhum dado
+# sensível está sendo incluído no repositório.
+# ============================================================================

@@ -1,5 +1,34 @@
+"""
+Serviço de Inteligência Artificial - FLAN-T5 para Chatbot Educacional
+
+Este módulo implementa a integração com o modelo FLAN-T5 da Hugging Face
+para geração de respostas contextualizadas em perguntas acadêmicas.
+
+Características técnicas:
+- Modelo: google/flan-t5-small (otimizado para recursos limitados)
+- Framework: Transformers + PyTorch
+- Suporte: CPU e GPU com detecção automática
+- Fallbacks: Sistema robusto de tratamento de erros
+
+Otimizações implementadas:
+- Monkey-patch para compatibilidade com versões
+- Detecção conservadora de hardware
+- Configurações seguras para hardware limitado
+- Pós-processamento de respostas
+
+Uso no contexto educacional:
+- Respostas baseadas no PPC-ES 2023
+- Contexto específico do curso de Engenharia de Software
+- Integração com sistema de busca em documentos
+
+Autor: Desenvolvimento para TCC - Engenharia de Software UFC Quixadá
+Data: 2025
+"""
+
 # Monkey-patch for split_torch_state_dict_into_shards
 import huggingface_hub
+
+# Contexto padrão específico do curso de Engenharia de Software UFC Quixadá
 DEFAULT_CONTEXT = """
 Você é um assistente virtual do curso de Engenharia de Software da UFC Quixadá.
 Informações relevantes:
@@ -25,7 +54,34 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class SafeFlanT5:
+    """
+    Wrapper seguro para o modelo FLAN-T5 com otimizações para ambiente educacional.
+    
+    Esta classe implementa uma interface robusta para o modelo FLAN-T5,
+    incluindo detecção automática de hardware, configurações otimizadas
+    e tratamento de erros para garantir estabilidade em produção.
+    
+    Características:
+    - Detecção automática de dispositivo (CPU/GPU)
+    - Configurações conservadoras para hardware limitado
+    - Sistema de fallback para casos de erro
+    - Logging estruturado para monitoramento
+    
+    Uso:
+        service = SafeFlanT5()
+        response = service.generate_response("pergunta", "contexto")
+    """
+    
     def __init__(self):
+        """
+        Inicializa o serviço FLAN-T5 com configurações seguras.
+        
+        Processo de inicialização:
+        1. Detecta o melhor dispositivo disponível
+        2. Carrega tokenizer com configurações rápidas
+        3. Carrega modelo com configurações conservadoras
+        4. Configura modo de avaliação para inferência
+        """
         self.device = self._select_safe_device()
         logger.info(f"Inicializando modelo FLAN-T5 no dispositivo: {self.device}")
         
