@@ -3,7 +3,7 @@ from typing import List, Dict, Any
 from difflib import SequenceMatcher
 
 class PPCSearch:
-    def __init__(self, chunks_file: str = "public/ppc_chunks.json"):
+    def __init__(self, chunks_file: str = "data/qa/public/ppc_chunks.json"):
         self.chunks_file = chunks_file
         self.chunks = []
         self.load_chunks()

@@ -73,7 +73,7 @@ async def send_long_message(update: Update, message: str, parse_mode: str = 'Mar
             await update.message.reply_text(f"(continuação...)\n\n{chunk}", parse_mode=parse_mode)
 
 # Carrega perguntas e respostas
-with open("public/perguntas_respostas_melhorado.json", encoding="utf-8") as f:
+with open("data/qa/public/perguntas_respostas_melhorado.json", encoding="utf-8") as f:
     DATA = json.load(f)
     QA = DATA["qa_items"]
     AMBIGUITY_CONFIG = DATA["ambiguity_detection"]
